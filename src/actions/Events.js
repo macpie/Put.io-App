@@ -1,4 +1,4 @@
-import * as PutioApis from '../apis/putio';
+import * as PutioApis from '../apis/Putio';
 import {
     EVENTS_GET
 } from '../constants';

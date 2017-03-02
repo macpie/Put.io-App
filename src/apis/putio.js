@@ -58,3 +58,21 @@ export const events = () => {
             });
     });
 };
+
+export const account = () => {
+    return new Promise((resolve, reject) => {
+        request
+            .get(BASE_URL + '/account/info')
+            .query({
+                oauth_token: Storage.getItem('access_token')
+            })
+            .set(HEADERS)
+            .end((err, res) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(res.body.info || {});
+                }
+            });
+    });
+};
