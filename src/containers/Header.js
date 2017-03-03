@@ -5,6 +5,7 @@ import {
     connect
 } from 'react-redux';
 import * as AccountActions from '../actions/Account';
+import * as MenuActions from '../actions/Menu';
 import Header from '../components/Header';
 
 const mapStateToProps = (state) => {
@@ -15,7 +16,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        accountActions: bindActionCreators(AccountActions, dispatch)
+        accountActions: bindActionCreators(AccountActions, dispatch),
+        menuActions: bindActionCreators(MenuActions, dispatch)
     };
 };
 

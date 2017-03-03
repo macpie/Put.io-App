@@ -10,9 +10,18 @@ export default class Header extends React.Component {
     constructor(props) {
         super(props);
 
+        this.handleMenuClick = this
+            .handleMenuClick
+            .bind(this);
+
         const {accountActions} = props;
 
         accountActions.getInfo();
+    }
+    handleMenuClick() {
+        const {menuActions} = this.props;
+
+        menuActions.toggle();
     }
     render() {
         const {disk} = this.props.account;
@@ -20,7 +29,7 @@ export default class Header extends React.Component {
         let value = 0,
             popover = '';
 
-        if(disk) {
+        if (disk) {
             value = Math.round(((100 * disk.used) / disk.size));
             popover += value + '% ';
             popover += utility.bytesToString(disk.used) + ' / ' + utility.bytesToString(disk.size);
@@ -35,7 +44,7 @@ export default class Header extends React.Component {
                     zIndex: 2
                 }}>
                     <ToolbarGroup firstChild={true}>
-                        <IconButton style={{
+                        <IconButton onClick={this.handleMenuClick} style={{
                             height: "100%"
                         }} children={<HeadlineIcon color="white" />}/>
                         <ToolbarTitle text="Put.io" style={{

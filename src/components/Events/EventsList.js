@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import * as _ from 'lodash';
 import {List, ListItem} from 'material-ui/List';
 import DateRangeIcon from 'material-ui/svg-icons/action/date-range';
@@ -57,5 +57,5 @@ export default class EventsList extends React.Component {
 };
 
 EventsList.propTypes = {
-    events: React.PropTypes.array
+    events: PropTypes.array
 }

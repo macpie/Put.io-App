@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {ListItem} from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
 import LinearProgress from 'material-ui/LinearProgress';
@@ -48,4 +48,9 @@ export default class TransferItem extends React.Component {
             />
         );
     }
+};
+
+TransferItem.propTypes = {
+    transfer: PropTypes.object.isRequired,
+    cancel: PropTypes.func.isRequired
 };
