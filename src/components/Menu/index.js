@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import Drawer from 'material-ui/Drawer';
+import AppBar from 'material-ui/AppBar';
 import MenuItem from 'material-ui/MenuItem';
 import EventIcon from 'material-ui/svg-icons/action/event';
 import TransferIcon from 'material-ui/svg-icons/action/swap-horiz';
@@ -13,8 +14,9 @@ export default class Menu extends React.Component {
                 open={this.props.open}
                 onRequestChange={this.props.menuToggle}
             >
+                <AppBar title="Menu" />
                 <MenuItem
-                    leftIcon={<EventIcon color="rgb(0, 188, 212)" />}
+                    leftIcon={<EventIcon />}
                     onClick={() => {
                         this.props.push('/events');
                         this.props.menuToggle();
@@ -23,7 +25,7 @@ export default class Menu extends React.Component {
                     Events
                 </MenuItem>
                 <MenuItem
-                    leftIcon={<TransferIcon color="rgb(0, 188, 212)" />}
+                    leftIcon={<TransferIcon />}
                     onClick={() => {
                         this.props.push('/transfers');
                         this.props.menuToggle();
