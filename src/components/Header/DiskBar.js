@@ -37,7 +37,7 @@ export default class DiskBar extends React.Component {
 
         return (
             <div>
-                <CircularProgress onMouseOver={this.handleMouseOver} mode="determinate" color={color} value={value}/>
+                <CircularProgress style={{transform: 'rotate(-90deg)'}} onMouseOver={this.handleMouseOver} mode="determinate" color={color} value={value}/>
                 <Popover open={this.state.open} anchorEl={this.state.anchorEl} anchorOrigin={{
                     horizontal: 'left',
                     vertical: 'top'

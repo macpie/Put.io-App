@@ -14,9 +14,12 @@ export default class App extends React.Component {
                     <Row style={{
                         marginBottom: 20
                     }}>
-                        <Header />
+                        <Header/>
                     </Row>
-                    <Row>
+                    <Row style={{
+                        marginRight: 0,
+                        marginLeft: 0
+                    }}>
                         {this.props.children}
                     </Row>
                 </Grid>

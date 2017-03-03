@@ -22,3 +22,14 @@ export const printDate = (date) => {
         return 'none';
     }
 };
+
+export const printDuration = (seconds) => {
+    if (seconds < 0) {
+        return 'forever';
+    } else if (seconds) {
+        return moment.duration(seconds, 'seconds')
+            .humanize();
+    } else {
+        return 'none';
+    }
+};

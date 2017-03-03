@@ -6,6 +6,6 @@ import {
 export const getInfo = () => {
     return {
         type: ACCOUNT_GET,
-        payload: PutioApis.account()
+        payload: PutioApis.accountInfo()
     };
 };

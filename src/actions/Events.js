@@ -6,6 +6,6 @@ import {
 export const getAll = () => {
     return {
         type: EVENTS_GET,
-        payload: PutioApis.events()
+        payload: PutioApis.eventsList()
     };
 };

@@ -10,6 +10,7 @@ import {UserIsAuthenticated} from './utils/RouteWrappers';
 import App from './containers/App';
 import Welcome from './containers/Welcome';
 import Events from './containers/Events';
+import Transfers from './containers/Transfers';
 
 injectTapEventPlugin();
 
@@ -23,7 +24,8 @@ const router = (
             <Route path="/" component={App}>
                 <IndexRedirect to="welcome"/>
                 <Route path="welcome" component={Welcome}/>
-                <Route path="events" component={UserIsAuthenticated(Events)}/>
+                <Route path="events" component={UserIsAuthenticated(Events)} />
+                <Route path="transfers" component={UserIsAuthenticated(Transfers)} />
                 <Redirect from="*" to="/welcome"/>
             </Route>
         </Router>

@@ -41,14 +41,14 @@ export const authenticate = () => {
     });
 };
 
-export const events = () => {
+export const eventsList = () => {
     return new Promise((resolve, reject) => {
         request
             .get(BASE_URL + '/events/list')
-            .query({
-                oauth_token: Storage.getItem('access_token')
-            })
             .set(HEADERS)
+            .query({
+                oauth_token: Storage.getItem('access_token'),
+            })
             .end((err, res) => {
                 if (err) {
                     reject(err);
@@ -59,19 +59,76 @@ export const events = () => {
     });
 };
 
-export const account = () => {
+export const accountInfo = () => {
     return new Promise((resolve, reject) => {
         request
             .get(BASE_URL + '/account/info')
-            .query({
-                oauth_token: Storage.getItem('access_token')
-            })
             .set(HEADERS)
+            .query({
+                oauth_token: Storage.getItem('access_token'),
+            })
             .end((err, res) => {
                 if (err) {
                     reject(err);
                 } else {
                     resolve(res.body.info || {});
+                }
+            });
+    });
+};
+
+export const transfersList = () => {
+    return new Promise((resolve, reject) => {
+        request
+            .get(BASE_URL + '/transfers/list')
+            .set(HEADERS)
+            .query({
+                oauth_token: Storage.getItem('access_token'),
+            })
+            .end((err, res) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(res.body.transfers || []);
+                }
+            });
+    });
+};
+
+export const transfersClean = () => {
+    return new Promise((resolve, reject) => {
+        request
+            .post(BASE_URL + '/transfers/clean')
+            .set(HEADERS)
+            .query({
+                oauth_token: Storage.getItem('access_token'),
+            })
+            .end((err, res) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(res.body || {});
+                }
+            });
+    });
+};
+
+export const transferCancel = (id) => {
+    return new Promise((resolve, reject) => {
+        request
+            .post(BASE_URL + '/transfers/cancel')
+            .set(HEADERS)
+            .query({
+                oauth_token: Storage.getItem('access_token'),
+            })
+            .send({
+                transfer_ids: id
+            })
+            .end((err, res) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(res.body || {});
                 }
             });
     });
