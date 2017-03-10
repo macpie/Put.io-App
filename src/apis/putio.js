@@ -12,6 +12,10 @@ const HEADERS = {
     'Accept': 'application/json'
 };
 
+export const downloadLink = (id) => {
+    return BASE_URL + '/files/' + id + '/download?oauth_token=' + Storage.getItem('access_token');
+};
+
 export const authenticate = () => {
     return new Promise((resolve, reject) => {
         if (Storage.getItem('access_token')) {
