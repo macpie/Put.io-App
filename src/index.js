@@ -11,6 +11,7 @@ import App from './containers/App';
 import Welcome from './containers/Welcome';
 import Events from './containers/Events';
 import Transfers from './containers/Transfers';
+import Files from './containers/Files';
 
 injectTapEventPlugin();
 
@@ -26,6 +27,8 @@ const router = (
                 <Route path="welcome" component={Welcome}/>
                 <Route path="events" component={UserIsAuthenticated(Events)} />
                 <Route path="transfers" component={UserIsAuthenticated(Transfers)} />
+                <Route path="files" component={UserIsAuthenticated(Files)} />
+                <Route path="files/:file_id" component={UserIsAuthenticated(Files)} />
                 <Redirect from="*" to="/welcome"/>
             </Route>
         </Router>

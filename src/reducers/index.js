@@ -9,6 +9,9 @@ import user from './User';
 import events from './Events';
 import account from './Account';
 import transfers from './Transfers';
+import files from './Files';
+import breadcrumbs from './Breadcrumbs';
+import parent from './Parent';
 
 export default combineReducers({
     menu,
@@ -16,5 +19,8 @@ export default combineReducers({
     events,
     account,
     transfers,
+    files,
+    breadcrumbs,
+    parent,
     routing: routerReducer
 });

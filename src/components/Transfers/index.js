@@ -11,12 +11,8 @@ export default class Transfers extends React.Component {
     constructor(props) {
         super(props);
 
-        this.handleClean = this
-            .handleClean
-            .bind(this);
-        this.handleCancel = this
-            .handleCancel
-            .bind(this);
+        this.handleClean = this.handleClean.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
 
         const {transfersActions} = props;
 
@@ -32,11 +28,15 @@ export default class Transfers extends React.Component {
         clearInterval(this.state.interval);
     }
     handleClean(e) {
+        e.preventDefault();
+
         const {transfersActions} = this.props;
 
         transfersActions.clean();
     }
-    handleCancel(id) {
+    handleCancel(id, e) {
+        e.preventDefault();
+
         const {transfersActions} = this.props;
 
         transfersActions.cancel(id);

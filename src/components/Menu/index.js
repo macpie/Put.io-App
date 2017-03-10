@@ -4,6 +4,7 @@ import AppBar from 'material-ui/AppBar';
 import MenuItem from 'material-ui/MenuItem';
 import EventIcon from 'material-ui/svg-icons/action/event';
 import TransferIcon from 'material-ui/svg-icons/action/swap-horiz';
+import FolderIcon from 'material-ui/svg-icons/file/folder';
 
 export default class Menu extends React.Component {
     render() {
@@ -14,7 +15,7 @@ export default class Menu extends React.Component {
                 open={this.props.open}
                 onRequestChange={this.props.menuToggle}
             >
-                <AppBar title="Menu" />
+                <AppBar title="Menu" showMenuIconButton={false} />
                 <MenuItem
                     leftIcon={<EventIcon />}
                     onClick={() => {
@@ -32,6 +33,15 @@ export default class Menu extends React.Component {
                     }}
                 >
                     Transfers
+                </MenuItem>
+                <MenuItem
+                    leftIcon={<FolderIcon />}
+                    onClick={() => {
+                        this.props.push('/files');
+                        this.props.menuToggle();
+                    }}
+                >
+                    Files
                 </MenuItem>
             </Drawer>
         );

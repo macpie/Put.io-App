@@ -119,7 +119,39 @@ export const transferCancel = (id) => {
             .post(BASE_URL + '/transfers/cancel')
             .set(HEADERS)
             .query({
+                oauth_token: Storage.getItem('access_token')
+            })
+            .send({
+                transfer_ids: id
+            })
+            .end((err, res) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(res.body || {});
+                }
+            });
+    });
+};
+
+export const filesList = (id = 0) => {
+    return new Promise((resolve, reject) => {
+        request
+            .get(BASE_URL + '/files/list')
+            .set(HEADERS)
+            .query({
                 oauth_token: Storage.getItem('access_token'),
+                parent_id: id,
+                breadcrumbs: true,
+                total: true,
+                mp4_status: true,
+                mp4_status_parent: true,
+                video_metadata: true,
+                video_metadata_parent: true,
+                stream_url: true,
+                stream_url_parent: true,
+                mp4_stream_url: true,
+                mp4_stream_url_parent: true
             })
             .send({
                 transfer_ids: id

@@ -6,6 +6,7 @@ export const TRANSFERS_GET = 'TRANSFERS_GET';
 export const TRANSFERS_CLEAN = 'TRANSFERS_CLEAN';
 export const TRANSFER_CANCEL = 'TRANSFER_CANCEL';
 export const MENU_TOGGLE = 'MENU_TOGGLE';
+export const FILES_GET = 'FILES_GET';
 
 // Colors
 export const COLORS = {

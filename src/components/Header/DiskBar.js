@@ -27,7 +27,7 @@ export default class DiskBar extends React.Component {
 
         let color = 'white';
 
-        if(value >= 75) {
+        if (value >= 75) {
             color = 'red';
         } else if (value >= 50 && value < 75) {
             color = 'orange';
@@ -36,8 +36,13 @@ export default class DiskBar extends React.Component {
         }
 
         return (
-            <div>
-                <CircularProgress style={{transform: 'rotate(-90deg)'}} onMouseOver={this.handleMouseOver} mode="determinate" color={color} value={value}/>
+            <div style={{
+                width: 40,
+                height: 40
+            }}>
+                <CircularProgress style={{
+                    transform: 'rotate(-90deg)'
+                }} onMouseOver={this.handleMouseOver} mode="determinate" color={color} value={value}/>
                 <Popover open={this.state.open} anchorEl={this.state.anchorEl} anchorOrigin={{
                     horizontal: 'left',
                     vertical: 'top'
@@ -48,7 +53,7 @@ export default class DiskBar extends React.Component {
                     backgroundColor: 'rgba(255, 255, 255, 0.75)',
                     padding: 5,
                     borderRadius: 10
-                }} >
+                }}>
                     {popover}
                 </Popover>
             </div>
