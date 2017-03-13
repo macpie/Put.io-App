@@ -8,9 +8,7 @@ export default class Files extends React.Component {
     constructor(props) {
         super(props);
 
-        this.handleCellClick = this
-            .handleCellClick
-            .bind(this);
+        this.handleRowClick = this.handleRowClick.bind(this);
 
         const {filesActions, params} = props;
 
@@ -23,14 +21,12 @@ export default class Files extends React.Component {
             filesActions.get(params.file_id);
         }
     }
-    handleCellClick(r, c, e) {
+    handleRowClick(file, e) {
         e.preventDefault();
 
-        const {files, goTo} = this.props;
+        const {goTo} = this.props;
 
-        if (c === 0 || c === 1) {
-            goTo("/files/" + files[r].id);
-        }
+        goTo("/files/" + file.id);
     }
     render() {
         const {files, breadcrumbs, parent, goTo} = this.props;
@@ -39,7 +35,7 @@ export default class Files extends React.Component {
             <Col id="Files" xs={12}>
                 <Paper zDepth={1}>
                     <Breadcrumbs breadcrumbs={breadcrumbs} parent={parent} goTo={goTo}/>
-                    <FilesTable files={files} parent={parent} cellClick={this.handleCellClick}/>
+                    <FilesTable files={files} parent={parent} rowClick={this.handleRowClick}/>
                 </Paper>
             </Col>
         );

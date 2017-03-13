@@ -8,11 +8,11 @@ import DownloadLink from './DownloadLink';
 
 const fileType = (file) => {
     if (file.file_type === 'FOLDER') {
-        return (<FolderIcon/>);
+        return (<FolderIcon />);
     } else if (file.file_type === 'VIDEO') {
-        return (<VideoIcon/>);
+        return (<VideoIcon />);
     } else {
-        return (<FileIcon/>);
+        return (<FileIcon />);
     }
 }
 
@@ -24,7 +24,7 @@ export default class FilesRow extends React.Component {
         } = this.props;
 
         return (
-            <TableRow {...props} selected={false}>
+            <TableRow {...props} selectable={false}>
                 {props.children[0]}
                 <TableRowColumn style={{
                     width: 24,
@@ -37,7 +37,12 @@ export default class FilesRow extends React.Component {
                 }}>
                     {file.name}
                 </TableRowColumn>
-                <DownloadLink file={file} />
+                <TableRowColumn style={{
+                    width: 24,
+                    cursor: 'pointer'
+                }}>
+                    <DownloadLink file={file} />
+                </TableRowColumn>
                 <TableRowColumn style={{
                     width: 75
                 }}>
