@@ -169,3 +169,25 @@ export const filesList = (id = 0) => {
             });
     });
 };
+
+export const createFolder = (parent_id = 0, name) => {
+    return new Promise((resolve, reject) => {
+        request
+            .post(BASE_URL + '/files/create-folder')
+            .set(HEADERS)
+            .query({
+                oauth_token: Storage.getItem('access_token')
+            })
+            .send({
+                parent_id,
+                name
+            })
+            .end((err, res) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(res.body || {});
+                }
+            });
+    });
+};

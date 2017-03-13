@@ -1,18 +1,22 @@
 import React, {PropTypes} from 'react';
 import {Table, TableBody, TableRow, TableHeader, TableHeaderColumn} from 'material-ui/Table';
+import RaisedButton from 'material-ui/RaisedButton';
+import MenuItem from 'material-ui/MenuItem';
+import IconMenu from 'material-ui/IconMenu';
+import CreateFolderIcon from 'material-ui/svg-icons/file/create-new-folder';
 import FilesRow from './FilesRow';
-import * as _ from 'lodash';
 
 export default class FilesTable extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            openMenu: false
-        };
+    state = {
+        openMenu: false
+    }
+    handleMenuToggle = () => {
+        this.setState({
+            openMenu: (this.state.openMenu) ? false : true
+        });
     }
     render() {
-        const {parent, files, rowClick} = this.props;
+        const {parent, files, rowClick, menuSelect} = this.props;
 
         let rows = [];
 
@@ -21,6 +25,8 @@ export default class FilesTable extends React.Component {
                 rowClick(file, e)
             }}/>);
         });
+
+        const btn = (<RaisedButton onTouchTap={this.handleMenuToggle} label="Actions"/>);
 
         return (
             <Table multiSelectable={false} selectable={false}>
@@ -33,6 +39,26 @@ export default class FilesTable extends React.Component {
                         </TableHeaderColumn>
                         <TableHeaderColumn>
                             Name
+                        </TableHeaderColumn>
+                        <TableHeaderColumn style={{
+                            width: 100
+                        }}>
+                            <IconMenu
+                                open={this.state.openMenu}
+                                onRequestChange={this.handleMenuToggle}
+                                onChange={menuSelect}
+                                iconButtonElement={btn}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left'
+                                }}
+                                targetOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'left'
+                                }}
+                            >
+                                <MenuItem value="new_folder" primaryText="New Folder" leftIcon={<CreateFolderIcon />} />
+                            </IconMenu>
                         </TableHeaderColumn>
                         <TableHeaderColumn style={{
                             width: 75
@@ -53,5 +79,6 @@ export default class FilesTable extends React.Component {
 FilesTable.propTypes = {
     parent: PropTypes.object,
     files: PropTypes.array,
-    rowClick: PropTypes.func
+    rowClick: PropTypes.func,
+    menuSelect: PropTypes.func
 };
