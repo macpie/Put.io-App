@@ -26,7 +26,7 @@ export default class FilesTable extends React.Component {
             }}/>);
         });
 
-        const btn = (<RaisedButton onTouchTap={this.handleMenuToggle} label="Actions"/>);
+        const btn = (<RaisedButton onTouchTap={this.handleMenuToggle} label="Actions" />);
 
         return (
             <Table multiSelectable={false} selectable={false}>

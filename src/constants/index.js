@@ -8,6 +8,7 @@ export const TRANSFER_CANCEL = 'TRANSFER_CANCEL';
 export const MENU_TOGGLE = 'MENU_TOGGLE';
 export const FILES_GET = 'FILES_GET';
 export const FOLDER_CREATE = 'FOLDER_CREATE';
+export const FILE_RENAME = 'FILE_RENAME';
 
 // Colors
 export const COLORS = {

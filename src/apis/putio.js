@@ -191,3 +191,25 @@ export const createFolder = (parent_id = 0, name) => {
             });
     });
 };
+
+export const renameFile = (file_id, name) => {
+    return new Promise((resolve, reject) => {
+        request
+            .post(BASE_URL + '/files/rename')
+            .set(HEADERS)
+            .query({
+                oauth_token: Storage.getItem('access_token')
+            })
+            .send({
+                file_id,
+                name
+            })
+            .end((err, res) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(res.body || {});
+                }
+            });
+    });
+};

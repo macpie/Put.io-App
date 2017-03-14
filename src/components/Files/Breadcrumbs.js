@@ -1,9 +1,15 @@
-import React from 'react';
-import * as _ from 'lodash';
+import React, {PropTypes} from 'react';
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 import ChevronIcon from 'material-ui/svg-icons/navigation/chevron-right';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+import * as _ from 'lodash';
 
 export default class Breadcrumbs extends React.Component {
+    handleClick = () => {
+        const {edit, parent} = this.props;
+
+        if(_.isFunction(edit)) edit(parent.id, parent.name);
+    }
     render() {
         const {breadcrumbs, parent, goTo} = this.props;
 
@@ -17,16 +23,25 @@ export default class Breadcrumbs extends React.Component {
                     goTo("/files/" + id)
                 }} style={{
                     color: 'black',
-                    cursor: 'pointer'
-                }}/>);
+                    cursor: 'pointer',
+                    paddingRight: 5
+                }} />);
                 rows.push(<ChevronIcon key={id + "-icon"} style={{
-                    paddingRight: 16
-                }}/>);
+                    paddingRight: 5
+                }} />);
             });
         }
 
         if (!_.isEmpty(parent)) {
-            rows.push(<ToolbarTitle key={parent.id} text={parent.name}/>);
+            rows.push(<ToolbarTitle key={parent.id} text={parent.name} style={{
+                paddingRight: 2,
+                cursor: 'pointer'
+            }} onClick={this.handleClick} />);
+            rows.push(<EditIcon key={parent.id + '-edit'} color="rgba(0, 0, 0, 0.4)" style={{
+                width: 18,
+                height: 18,
+                cursor: 'pointer'
+            }}  onClick={this.handleClick} />);
         }
 
         return (
@@ -39,4 +54,8 @@ export default class Breadcrumbs extends React.Component {
             </Toolbar>
         );
     }
+};
+
+Breadcrumbs.propTypes = {
+    edit: PropTypes.func
 };
