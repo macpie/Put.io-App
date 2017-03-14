@@ -59,9 +59,15 @@ export default class Files extends React.Component {
         goTo("/files/" + file.id);
     }
     handleMenuSelect = (e, value) => {
+        const {filesActions} = this.props;
+        const {selected} = this.state;
+
         switch(value) {
             case 'new_folder':
                 this.setState({createFolder: true});
+                break;
+            case 'delete':
+                filesActions.filesDelete(selected);
                 break;
             default:
                 console.log(value);

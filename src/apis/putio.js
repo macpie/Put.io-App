@@ -230,7 +230,10 @@ export const deleteFiles = (ids) => {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(res.body || {});
+                    let result = res.body || {};
+
+                    result.ids = ids;
+                    resolve(result);
                 }
             });
     });
