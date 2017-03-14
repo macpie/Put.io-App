@@ -2,7 +2,8 @@ import * as PutioApis from '../apis/Putio';
 import {
     FILES_GET,
     FOLDER_CREATE,
-    FILE_RENAME
+    FILE_RENAME,
+    FILES_DELETE
 } from '../constants';
 
 export const get = (id) => {
@@ -33,5 +34,12 @@ export const fileRename = (id, name) => {
             .then(() => {
                 dispatch(get(id));
             });
+    };
+};
+
+export const filesDelete = (ids) => {
+    return {
+        type: FILES_DELETE,
+        payload: PutioApis.deleteFiles(ids)
     };
 };

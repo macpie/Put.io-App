@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Table, TableBody, TableRow, TableRowColumn, TableHeader, TableHeaderColumn} from 'material-ui/Table';
+import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem';
 import IconMenu from 'material-ui/IconMenu';
@@ -9,15 +10,43 @@ import * as _ from 'lodash';
 
 export default class FilesTable extends React.Component {
     state = {
-        openMenu: false
+        openMenu: false,
+        selected: []
     }
     handleMenuToggle = () => {
         this.setState({
             openMenu: (this.state.openMenu) ? false : true
         });
     }
+    handleSelectAll = (e, checked) => {
+        const {files} = this.props;
+
+        if(checked) {
+            this.setState({
+                selected: _.map(files, 'id')
+            });
+        } else {
+            this.setState({
+                selected: []
+            });
+        }
+    }
+    handleSelect = (id, checked) => {
+        const {selected} = this.state;
+
+        if(checked) {
+            this.setState({
+                selected: _.concat(selected, [id])
+            });
+        } else {
+            this.setState({
+                selected: _.without(selected, id)
+            });
+        }
+    }
     render() {
         const {parent, files, rowClick, menuSelect} = this.props;
+        const {selected, openMenu} = this.state;
 
         const content = () => {
             if(_.isEmpty(files)) {
@@ -30,9 +59,11 @@ export default class FilesTable extends React.Component {
                 let rows = [];
 
                 files.forEach((file) => {
+                    const checked = (_.indexOf(selected, file.id) === -1) ? false : true;
+
                     rows.push(<FilesRow key={file.id} file={file} onClick={(e) => {
                         rowClick(file, e)
-                    }}/>);
+                    }} checked={checked} onSelect={this.handleSelect} />);
                 });
 
                 return rows;
@@ -48,6 +79,11 @@ export default class FilesTable extends React.Component {
                         <TableHeaderColumn style={{
                             width: 24
                         }}>
+                            <Checkbox onCheck={this.handleSelectAll} />
+                        </TableHeaderColumn>
+                        <TableHeaderColumn style={{
+                            width: 24
+                        }}>
                             Type
                         </TableHeaderColumn>
                         <TableHeaderColumn>
@@ -57,7 +93,7 @@ export default class FilesTable extends React.Component {
                             width: 100
                         }}>
                             <IconMenu
-                                open={this.state.openMenu}
+                                open={openMenu}
                                 onRequestChange={this.handleMenuToggle}
                                 onChange={menuSelect}
                                 iconButtonElement={btn}

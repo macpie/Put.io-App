@@ -1,8 +1,10 @@
 import React, {PropTypes} from 'react';
 import {TableRow, TableRowColumn} from 'material-ui/Table';
+import Checkbox from 'material-ui/Checkbox';
 import FolderIcon from 'material-ui/svg-icons/file/folder';
 import FileIcon from 'material-ui/svg-icons/editor/insert-drive-file';
 import VideoIcon from 'material-ui/svg-icons/av/movie';
+import * as _ from 'lodash';
 import * as utility from '../../utils';
 import DownloadLink from './DownloadLink';
 
@@ -17,6 +19,27 @@ const fileType = (file) => {
 }
 
 export default class FilesRow extends React.Component {
+    state = {
+        checked: false
+    }
+    componentWillReceiveProps(nextProps) {
+        const {checked} = nextProps;
+
+        this.setState({
+            checked: checked
+        });
+    }
+    handleSelect = (e, checked) => {
+        const {file, onSelect} = this.props;
+
+        if(_.isFunction(onSelect)) {
+            onSelect(file.id, checked);
+        }
+
+        this.setState({
+            checked: checked
+        });
+    }
     render() {
         const {
             file,
@@ -26,6 +49,15 @@ export default class FilesRow extends React.Component {
         return (
             <TableRow {...props} selectable={false}>
                 {props.children[0]}
+                <TableRowColumn style={{
+                    width: 24
+                }}>
+                    <Checkbox
+                        checked={this.state.checked}
+                        onClick={(e) => {e.stopPropagation()}}
+                        onCheck={this.handleSelect}
+                    />
+                </TableRowColumn>
                 <TableRowColumn style={{
                     width: 24,
                     cursor: 'pointer'
@@ -54,5 +86,7 @@ export default class FilesRow extends React.Component {
 };
 
 FilesRow.propTypes = {
-    file: PropTypes.object.isRequired
+    file: PropTypes.object.isRequired,
+    selected: PropTypes.bool,
+    onSelect: PropTypes.func
 };

@@ -1,5 +1,6 @@
 import request from 'superagent';
 import Promise from 'promise';
+import * as _ from 'lodash';
 import * as Storage from '../utils/Storage';
 import {
     OAUTH_SERVER,
@@ -203,6 +204,27 @@ export const renameFile = (file_id, name) => {
             .send({
                 file_id,
                 name
+            })
+            .end((err, res) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(res.body || {});
+                }
+            });
+    });
+};
+
+export const deleteFiles = (ids) => {
+    return new Promise((resolve, reject) => {
+        request
+            .post(BASE_URL + '/files/delete')
+            .set(HEADERS)
+            .query({
+                oauth_token: Storage.getItem('access_token')
+            })
+            .send({
+                file_ids: (_.isArray(ids)) ?  _.join(ids, ',') : ids
             })
             .end((err, res) => {
                 if (err) {
