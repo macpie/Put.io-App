@@ -25,9 +25,7 @@ export default class FilesRow extends React.Component {
     componentWillReceiveProps(nextProps) {
         const {checked} = nextProps;
 
-        this.setState({
-            checked: checked
-        });
+        this.setState({checked});
     }
     handleSelect = (e, checked) => {
         const {file, onSelect} = this.props;
@@ -36,9 +34,7 @@ export default class FilesRow extends React.Component {
             onSelect(file.id, checked);
         }
 
-        this.setState({
-            checked: checked
-        });
+        this.setState({checked});
     }
     render() {
         const {
