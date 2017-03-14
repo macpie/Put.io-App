@@ -10,7 +10,8 @@ import RenameFile from '../RenameFile';
 export default class Files extends React.Component {
     state = {
         createFolder: false,
-        renameFile: {}
+        renameFile: {},
+        selected: []
     }
     constructor(props) {
         super(props);
@@ -24,6 +25,32 @@ export default class Files extends React.Component {
 
         if (this.props.params.file_id !== params.file_id) {
             filesActions.get(params.file_id);
+        }
+    }
+    handleSelectAll = (e, checked) => {
+        const {files} = this.props;
+
+        if(checked) {
+            this.setState({
+                selected: _.map(files, 'id')
+            });
+        } else {
+            this.setState({
+                selected: []
+            });
+        }
+    }
+    handleSelect = (id, checked) => {
+        const {selected} = this.state;
+
+        if(checked) {
+            this.setState({
+                selected: _.concat(selected, [id])
+            });
+        } else {
+            this.setState({
+                selected: _.without(selected, id)
+            });
         }
     }
     handleRowClick = (file) => {
@@ -58,7 +85,7 @@ export default class Files extends React.Component {
     }
     render() {
         const {files, breadcrumbs, parent, goTo} = this.props;
-        const {createFolder, renameFile} = this.state;
+        const {createFolder, renameFile, selected} = this.state;
 
         return (
             <Col id="Files" xs={12}>
@@ -67,6 +94,9 @@ export default class Files extends React.Component {
                     <FilesTable
                         files={files}
                         parent={parent}
+                        selectAll={this.handleSelectAll}
+                        select={this.handleSelect}
+                        selected={selected}
                         rowClick={this.handleRowClick}
                         menuSelect={this.handleMenuSelect}
                         createFolder={this.handleFolderCreate}
