@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react';
-import {Table, TableBody, TableRow, TableHeader, TableHeaderColumn} from 'material-ui/Table';
+import {Table, TableBody, TableRow, TableRowColumn, TableHeader, TableHeaderColumn} from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem';
 import IconMenu from 'material-ui/IconMenu';
 import CreateFolderIcon from 'material-ui/svg-icons/file/create-new-folder';
 import FilesRow from './FilesRow';
+import * as _ from 'lodash';
 
 export default class FilesTable extends React.Component {
     state = {
@@ -18,13 +19,25 @@ export default class FilesTable extends React.Component {
     render() {
         const {parent, files, rowClick, menuSelect} = this.props;
 
-        let rows = [];
+        const content = () => {
+            if(_.isEmpty(files)) {
+                return (
+                    <TableRow>
+                        <TableRowColumn style={{textAlign: 'center'}}>Nothing</TableRowColumn>
+                    </TableRow>
+                );
+            } else {
+                let rows = [];
 
-        files.forEach((file) => {
-            rows.push(<FilesRow key={file.id} file={file} onClick={(e) => {
-                rowClick(file, e)
-            }}/>);
-        });
+                files.forEach((file) => {
+                    rows.push(<FilesRow key={file.id} file={file} onClick={(e) => {
+                        rowClick(file, e)
+                    }}/>);
+                });
+
+                return rows;
+            }
+        };
 
         const btn = (<RaisedButton onTouchTap={this.handleMenuToggle} label="Actions" />);
 
@@ -68,7 +81,7 @@ export default class FilesTable extends React.Component {
                     </TableRow>
                 </TableHeader>
                 <TableBody key={parent.id} showRowHover={true} displayRowCheckbox={false}>
-                    {rows}
+                    {content()}
                 </TableBody>
             </Table>
         );
