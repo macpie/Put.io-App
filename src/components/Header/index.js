@@ -16,7 +16,7 @@ export default class Header extends React.Component {
 
         const {accountActions} = props;
 
-        accountActions.getInfo();
+        accountActions.info();
     }
     handleMenuClick() {
         const {menuActions} = this.props;

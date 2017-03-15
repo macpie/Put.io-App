@@ -73,7 +73,7 @@ export default class Files extends React.Component {
                 this.setState({createFolder: true});
                 break;
             case 'delete':
-                filesActions.filesDelete(selected);
+                filesActions.delete(selected);
                 break;
             default:
                 console.log(value);
@@ -92,7 +92,7 @@ export default class Files extends React.Component {
         const {filesActions} = this.props;
         const {renameFile} = this.state;
 
-        filesActions.fileRename(renameFile.id, name);
+        filesActions.rename(renameFile.id, name);
         this.setState({renameFile: {}});
     }
     render() {

@@ -3,7 +3,7 @@ import {
     ACCOUNT_GET
 } from '../constants';
 
-export const getInfo = () => {
+export const info = () => {
     return {
         type: ACCOUNT_GET,
         payload: PutioApis.accountInfo()

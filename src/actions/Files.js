@@ -25,11 +25,11 @@ export const createFolder = (parent_id, name) => {
     };
 };
 
-export const fileRename = (id, name) => {
+export const rename = (id, name) => {
     return dispatch => {
         return dispatch({
                 type: FILE_RENAME,
-                payload: PutioApis.renameFile(id, name)
+                payload: PutioApis.fileRename(id, name)
             })
             .then(() => {
                 dispatch(get(id));
@@ -37,9 +37,9 @@ export const fileRename = (id, name) => {
     };
 };
 
-export const filesDelete = (ids) => {
+export const delete = (ids) => {
     return {
         type: FILES_DELETE,
-        payload: PutioApis.deleteFiles(ids)
+        payload: PutioApis.filesDelete(ids)
     };
 };

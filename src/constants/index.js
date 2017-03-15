@@ -10,6 +10,8 @@ export const FILES_GET = 'FILES_GET';
 export const FOLDER_CREATE = 'FOLDER_CREATE';
 export const FILE_RENAME = 'FILE_RENAME';
 export const FILES_DELETE = 'FILES_DELETE';
+export const ZIP_CREATE = 'ZIP_CREATE';
+export const ZIP_GET = 'ZIP_GET';
 
 // Colors
 export const COLORS = {

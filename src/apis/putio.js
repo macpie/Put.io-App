@@ -193,7 +193,7 @@ export const createFolder = (parent_id = 0, name) => {
     });
 };
 
-export const renameFile = (file_id, name) => {
+export const fileRename = (file_id, name) => {
     return new Promise((resolve, reject) => {
         request
             .post(BASE_URL + '/files/rename')
@@ -215,7 +215,7 @@ export const renameFile = (file_id, name) => {
     });
 };
 
-export const deleteFiles = (ids) => {
+export const filesDelete = (ids) => {
     return new Promise((resolve, reject) => {
         request
             .post(BASE_URL + '/files/delete')
@@ -234,6 +234,48 @@ export const deleteFiles = (ids) => {
 
                     result.ids = ids;
                     resolve(result);
+                }
+            });
+    });
+};
+
+export const zipCreate = (ids) => {
+    return new Promise((resolve, reject) => {
+        request
+            .post(BASE_URL + '/zips/create')
+            .set(HEADERS)
+            .query({
+                oauth_token: Storage.getItem('access_token')
+            })
+            .send({
+                file_ids: (_.isArray(ids)) ?  _.join(ids, ',') : ids
+            })
+            .end((err, res) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    let result = res.body || {};
+
+                    result.ids = ids;
+                    resolve(result);
+                }
+            });
+    });
+};
+
+export const zip = (id) => {
+    return new Promise((resolve, reject) => {
+        request
+            .get(BASE_URL + '/zips/' + id)
+            .set(HEADERS)
+            .query({
+                oauth_token: Storage.getItem('access_token')
+            })
+            .end((err, res) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(res.body || {});
                 }
             });
     });
