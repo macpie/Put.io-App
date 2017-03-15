@@ -32,7 +32,7 @@ export default class Breadcrumbs extends React.Component {
             });
         }
 
-        if (!_.isEmpty(parent)) {
+        if (!_.isEmpty(parent) && parent.id !== 0) {
             rows.push(<ToolbarTitle key={parent.id} text={parent.name} style={{
                 paddingRight: 2,
                 cursor: 'pointer'
@@ -42,6 +42,12 @@ export default class Breadcrumbs extends React.Component {
                 height: 18,
                 cursor: 'pointer'
             }}  onClick={this.handleClick} />);
+        }
+
+        if (!_.isEmpty(parent) && parent.id === 0) {
+            rows.push(<ToolbarTitle key={parent.id} text={parent.name} style={{
+                color: 'black'
+            }} />);
         }
 
         return (
