@@ -27,6 +27,12 @@ export default class Files extends React.Component {
             filesActions.get(params.file_id);
         }
     }
+    handleReset = () => {
+        this.setState({
+            createFolder: false,
+            renameFile: {}
+        });
+    }
     handleSelectAll = (e, checked) => {
         const {files} = this.props;
 
@@ -108,8 +114,8 @@ export default class Files extends React.Component {
                         createFolder={this.handleFolderCreate}
                     />
                 </Paper>
-                <CreateFolder open={createFolder} parent={parent} create={this.handleCreateFolder} />
-                <RenameFile open={!_.isEmpty(renameFile)} name={renameFile.name || ''} rename={this.handleRenameFile} />
+                <CreateFolder open={createFolder} parent={parent} create={this.handleCreateFolder} cancel={this.handleReset} />
+                <RenameFile open={!_.isEmpty(renameFile)} name={renameFile.name || ''} rename={this.handleRenameFile} cancel={this.handleReset} />
             </Col>
         );
     }

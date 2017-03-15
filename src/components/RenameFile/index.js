@@ -22,6 +22,7 @@ export default class RenameFolder extends React.Component {
             value: '',
             open: false
         });
+        this.props.cancel();
     }
     handleCreate = () => {
         this.props.rename(this.state.value);

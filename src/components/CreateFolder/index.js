@@ -21,6 +21,7 @@ export default class CreateFolder extends React.Component {
             value: '',
             open: false
         });
+        this.props.cancel();
     }
     handleCreate = () => {
         this.props.create(this.state.value);

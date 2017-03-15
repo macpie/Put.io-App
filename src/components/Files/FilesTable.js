@@ -1,26 +1,12 @@
 import React, {PropTypes} from 'react';
-import {Table, TableBody, TableRow, TableRowColumn, TableHeader, TableHeaderColumn} from 'material-ui/Table';
-import Checkbox from 'material-ui/Checkbox';
-import RaisedButton from 'material-ui/RaisedButton';
-import MenuItem from 'material-ui/MenuItem';
-import IconMenu from 'material-ui/IconMenu';
-import CreateFolderIcon from 'material-ui/svg-icons/file/create-new-folder';
-import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import {Table, TableBody, TableRow, TableRowColumn, TableHeader} from 'material-ui/Table';
 import FilesRow from './FilesRow';
+import FilesTableHeader from './FilesTableHeader';
 import * as _ from 'lodash';
 
 export default class FilesTable extends React.Component {
-    state = {
-        openMenu: false
-    }
-    handleMenuToggle = () => {
-        this.setState({
-            openMenu: (this.state.openMenu) ? false : true
-        });
-    }
     render() {
-        const {parent, files, rowClick, menuSelect, selected, select, selectAll} = this.props;
-        const {openMenu} = this.state;
+        const {parent, files, rowClick, selected, select, selectAll, menuSelect} = this.props;
 
         const content = () => {
             if(_.isEmpty(files)) {
@@ -44,49 +30,11 @@ export default class FilesTable extends React.Component {
             }
         };
 
-        const btn = (<RaisedButton onTouchTap={this.handleMenuToggle} label="Actions" />);
-
         return (
             <Table multiSelectable={false} selectable={false}>
                 <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-                    <TableRow>
-                        <TableHeaderColumn style={{
-                            width: 24
-                        }}>
-                            <Checkbox onCheck={selectAll} />
-                        </TableHeaderColumn>
-                        <TableHeaderColumn style={{
-                            width: 24
-                        }}>
-                            Type
-                        </TableHeaderColumn>
-                        <TableHeaderColumn>
-                            Name
-                        </TableHeaderColumn>
-                        <TableHeaderColumn style={{
-                            width: 100
-                        }}>
-                            <IconMenu
-                                open={openMenu}
-                                onRequestChange={this.handleMenuToggle}
-                                onChange={menuSelect}
-                                iconButtonElement={btn}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'middle'
-                                }}
-                            >
-                                <MenuItem value="new_folder" primaryText="New Folder" leftIcon={<CreateFolderIcon />} />
-                                <MenuItem value="delete" primaryText="Delete" leftIcon={<DeleteIcon />} />
-                            </IconMenu>
-                        </TableHeaderColumn>
-                        <TableHeaderColumn style={{
-                            width: 75
-                        }}>
-                            Size
-                        </TableHeaderColumn>
-                    </TableRow>
-                </TableHeader>
+                    <FilesTableHeader selectAll={selectAll} menuSelect={menuSelect} />
+                </TableHeader >
                 <TableBody key={parent.id} showRowHover={true} displayRowCheckbox={false}>
                     {content()}
                 </TableBody>
