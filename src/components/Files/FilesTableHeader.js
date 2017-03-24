@@ -6,6 +6,8 @@ import MenuItem from 'material-ui/MenuItem';
 import IconMenu from 'material-ui/IconMenu';
 import CreateFolderIcon from 'material-ui/svg-icons/file/create-new-folder';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import ArchiveIcon from 'material-ui/svg-icons/content/archive';
+import SettingsIcon from 'material-ui/svg-icons/action/settings-applications';
 import * as _ from 'lodash';
 
 export default class FilesTableHeader extends React.Component {
@@ -21,7 +23,7 @@ export default class FilesTableHeader extends React.Component {
         const {menuSelect, selectAll} = this.props;
         const {openMenu} = this.state;
 
-        const btn = (<RaisedButton onTouchTap={this.handleMenuToggle} label="Actions" />);
+        const btn = (<RaisedButton onTouchTap={this.handleMenuToggle} label="Actions" icon={<SettingsIcon />} />);
 
         return (
             <TableRow>
@@ -53,6 +55,7 @@ export default class FilesTableHeader extends React.Component {
                     >
                         <MenuItem value="new_folder" primaryText="New Folder" leftIcon={<CreateFolderIcon />} />
                         <MenuItem value="delete" primaryText="Delete" leftIcon={<DeleteIcon />} />
+                        <MenuItem value="zip" primaryText="Zip & Download" leftIcon={<ArchiveIcon />} />
                     </IconMenu>
                 </TableHeaderColumn>
                 <TableHeaderColumn style={{

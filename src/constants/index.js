@@ -12,6 +12,7 @@ export const FILE_RENAME = 'FILE_RENAME';
 export const FILES_DELETE = 'FILES_DELETE';
 export const ZIP_CREATE = 'ZIP_CREATE';
 export const ZIP_GET = 'ZIP_GET';
+export const ZIP_CLEAR = 'ZIP_CLEAR';
 
 // Colors
 export const COLORS = {

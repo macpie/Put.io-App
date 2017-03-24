@@ -37,7 +37,7 @@ export const rename = (id, name) => {
     };
 };
 
-export const delete = (ids) => {
+export const remove = (ids) => {
     return {
         type: FILES_DELETE,
         payload: PutioApis.filesDelete(ids)

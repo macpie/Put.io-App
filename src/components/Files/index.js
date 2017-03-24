@@ -6,6 +6,7 @@ import Breadcrumbs from './Breadcrumbs';
 import FilesTable from './FilesTable';
 import CreateFolder from '../CreateFolder';
 import RenameFile from '../RenameFile';
+import ZipDialog from './ZipDialog';
 
 export default class Files extends React.Component {
     state = {
@@ -21,8 +22,13 @@ export default class Files extends React.Component {
         filesActions.get(params.file_id);
     }
     componentWillReceiveProps(nextProps) {
-        const {filesActions, params} = nextProps;
+        const {filesActions, zipActions, params, zip} = nextProps;
 
+        if(zip.id && !zip.url) {
+            setTimeout(() => {
+                zipActions.get(zip.id);
+            }, 2000);
+        }
         if (this.props.params.file_id !== params.file_id) {
             filesActions.get(params.file_id);
         }
@@ -65,7 +71,7 @@ export default class Files extends React.Component {
         goTo("/files/" + file.id);
     }
     handleMenuSelect = (e, value) => {
-        const {filesActions} = this.props;
+        const {filesActions, zipActions} = this.props;
         const {selected} = this.state;
 
         switch(value) {
@@ -73,7 +79,10 @@ export default class Files extends React.Component {
                 this.setState({createFolder: true});
                 break;
             case 'delete':
-                filesActions.delete(selected);
+                filesActions.remove(selected);
+                break;
+            case 'zip':
+                zipActions.create(selected);
                 break;
             default:
                 console.log(value);
@@ -96,8 +105,14 @@ export default class Files extends React.Component {
         this.setState({renameFile: {}});
     }
     render() {
-        const {files, breadcrumbs, parent, goTo} = this.props;
+        const {files, breadcrumbs, parent, goTo, zip} = this.props;
         const {createFolder, renameFile, selected} = this.state;
+
+        let zipDialog = null;
+
+        if(zip.url) {
+            zipDialog = (<ZipDialog zip={zip} open={true} />);
+        }
 
         return (
             <Col id="Files" xs={12}>
@@ -116,6 +131,7 @@ export default class Files extends React.Component {
                 </Paper>
                 <CreateFolder open={createFolder} parent={parent} create={this.handleCreateFolder} cancel={this.handleReset} />
                 <RenameFile open={!_.isEmpty(renameFile)} name={renameFile.name || ''} rename={this.handleRenameFile} cancel={this.handleReset} />
+                {zipDialog}
             </Col>
         );
     }

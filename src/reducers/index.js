@@ -12,6 +12,7 @@ import transfers from './Transfers';
 import files from './Files';
 import breadcrumbs from './Breadcrumbs';
 import parent from './Parent';
+import zip from './Zip';
 
 export default combineReducers({
     menu,
@@ -22,5 +23,6 @@ export default combineReducers({
     files,
     breadcrumbs,
     parent,
+    zip,
     routing: routerReducer
 });

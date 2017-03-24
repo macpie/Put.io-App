@@ -275,7 +275,10 @@ export const zip = (id) => {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(res.body || {});
+                    let result = res.body || {};
+
+                    result.id = id;
+                    resolve(result);
                 }
             });
     });

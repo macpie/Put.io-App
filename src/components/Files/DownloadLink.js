@@ -11,12 +11,13 @@ export default class downloadLink extends React.Component {
             return null;
         } else {
             return (
-                <IconButton onClick={(e) => {
-                    e.stopPropagation()
-                }}>
-                    <a href={PutioAPIs.downloadLink(file.id)} target="_self">
-                        <DownloadIcon/>
-                    </a>
+                <IconButton
+                    href={PutioAPIs.downloadLink(file.id)}
+                    onClick={(e) => {
+                        e.stopPropagation()
+                    }}
+                >
+                    <DownloadIcon />
                 </IconButton>
             );
         }
