@@ -4,6 +4,9 @@ import {
 import {
     routerReducer
 } from 'react-router-redux';
+import {
+    loadingBarReducer
+} from 'react-redux-loading-bar';
 import menu from './Menu';
 import user from './User';
 import events from './Events';
@@ -15,6 +18,8 @@ import parent from './Parent';
 import zip from './Zip';
 
 export default combineReducers({
+    routing: routerReducer,
+    loadingBar: loadingBarReducer,
     menu,
     user,
     events,
@@ -23,6 +28,5 @@ export default combineReducers({
     files,
     breadcrumbs,
     parent,
-    zip,
-    routing: routerReducer
+    zip
 });

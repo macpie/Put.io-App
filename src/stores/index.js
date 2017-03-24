@@ -10,6 +10,9 @@ import {
 import {
     routerMiddleware
 } from 'react-router-redux';
+import {
+    loadingBarMiddleware
+} from 'react-redux-loading-bar'
 import Reducers from '../reducers';
 
 const initialState = {},
@@ -17,7 +20,10 @@ const initialState = {},
         promiseTypeSuffixes: ['PENDING', 'RESOLVED', 'REJECTED']
     }),
     router = routerMiddleware(browserHistory),
-    middlewares = [thunk, promise, router];
+    loading = loadingBarMiddleware({
+        promiseTypeSuffixes: ['PENDING', 'RESOLVED', 'REJECTED']
+    }),
+    middlewares = [thunk, promise, router, loading];
 
 if (process.env.NODE_ENV === 'development') {
     const createLogger = require('redux-logger');
