@@ -18,9 +18,13 @@ export default class ZipDialog extends React.Component {
         this.setState({open});
     }
     handleClose = () => {
+        const {closing} = this.props;
+
         this.setState({
              open: false
         });
+
+        closing();
     }
     render() {
         const {zip} = this.props;
@@ -50,6 +54,7 @@ export default class ZipDialog extends React.Component {
 };
 
 ZipDialog.propTypes = {
-    open: PropTypes.bool,
-    zip: PropTypes.object
+    open: PropTypes.bool.isRequired,
+    zip: PropTypes.object.isRequired,
+    closing: PropTypes.func.isRequired
 };

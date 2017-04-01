@@ -1,6 +1,6 @@
 {
   "name": "Putio-App",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "devDependencies": {
     "react-scripts": "0.8.5"
@@ -24,7 +24,8 @@
     "redux-logger": "^2.7.4",
     "redux-promise-middleware": "^4.2.0",
     "redux-thunk": "^2.2.0",
-    "superagent": "^3.4.0"
+    "superagent": "^3.4.0",
+    "video.js": "^5.18.4"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -3,7 +3,9 @@ import {
     FILES_GET,
     FOLDER_CREATE,
     FILE_RENAME,
-    FILES_DELETE
+    FILES_DELETE,
+    FILE_STREAM,
+    CLEAR_STREAM
 } from '../constants';
 
 export const get = (id) => {
@@ -12,6 +14,19 @@ export const get = (id) => {
         payload: PutioApis.filesList(id)
     };
 };
+
+export const getTextFile = (id) => {
+    return {
+        type: FILE_STREAM,
+        payload: PutioApis.fileStream(id)
+    };
+}
+
+export const clearStream = () => {
+    return {
+        type: CLEAR_STREAM
+    };
+}
 
 export const createFolder = (parent_id, name) => {
     return dispatch => {

@@ -13,11 +13,11 @@ import Files from '../components/Files';
 
 const mapStateToProps = (state, props) => {
     return {
-        id: props.params,
         files: state.files,
         breadcrumbs: state.breadcrumbs,
         parent: state.parent,
-        zip: state.zip
+        zip: state.zip,
+        stream: state.stream
     };
 };
 

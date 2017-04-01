@@ -24,9 +24,8 @@ export const create = (ids) => {
     };
 };
 
-export const clear = (id) => {
+export const clear = () => {
     return {
-        type: ZIP_CLEAR,
-        payload: {id}
+        type: ZIP_CLEAR
     };
 };

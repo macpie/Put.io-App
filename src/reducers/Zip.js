@@ -11,7 +11,7 @@ export default (state = {}, {
     switch (type) {
         case `${ZIP_GET}_RESOLVED`:
             return payload;
-        case `${ZIP_CLEAR}_RESOLVED`:
+        case `${ZIP_CLEAR}`:
             return {};
         default:
             return state;

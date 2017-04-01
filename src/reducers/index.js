@@ -16,6 +16,7 @@ import files from './Files';
 import breadcrumbs from './Breadcrumbs';
 import parent from './Parent';
 import zip from './Zip';
+import stream from './Stream';
 
 export default combineReducers({
     routing: routerReducer,
@@ -28,5 +29,6 @@ export default combineReducers({
     files,
     breadcrumbs,
     parent,
-    zip
+    zip,
+    stream
 });
