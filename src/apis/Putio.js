@@ -12,6 +12,18 @@ const HEADERS = {
     'Content-Type': 'application/x-www-form-urlencoded',
     'Accept': 'application/json'
 };
+const parseHash = () => {
+    var hash = (window.location.hash || '')
+        .replace(/^#/, '')
+        .split('&'),
+        parsed = {};
+
+    for (var i = 0, el; i < hash.length; i++) {
+        el = hash[i].split('=')
+        parsed[el[0]] = el[1];
+    }
+    return parsed;
+};
 
 export const downloadLink = (id) => {
     return BASE_URL + '/files/' + id + '/download?oauth_token=' + Storage.getItem('access_token');
@@ -24,24 +36,39 @@ export const authenticate = () => {
                 access_token: Storage.getItem('access_token')
             });
         } else {
-            request
-                .get(BASE_URL + '/oauth2/authenticate')
-                .query('client_id=' + CLIENT_ID + '&response_type=code&redirect_uri=http://' + OAUTH_SERVER + '/api/oauth')
-                .set(HEADERS)
-                .end((err, res) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        if (res.type === 'text/html') {
-                            window.open("https://put.io/?login=1");
-                            reject();
-                        } else {
-                            Storage.setItem('access_token', res.body.access_token);
-                            resolve(res.body);
-                        }
+            var hash = parseHash();
 
-                    }
+            if (hash.access_token) {
+                Storage.setItem('access_token', hash.access_token);
+
+                resolve({
+                    access_token: hash.access_token
                 });
+            } else {
+                const redirect = window.location.origin;
+
+                request
+                    .get(BASE_URL + '/oauth2/authenticate')
+                    .query('client_id=' + CLIENT_ID + '&response_type=token&redirect_uri=' + redirect)
+                    .set(HEADERS)
+                    .end((err, res) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            console.log(res);
+                            if (res.type === 'text/html') {
+                                window.open(res.req.url, "_self");
+                                reject();
+                            } else {
+                                Storage.setItem('access_token', res.body.access_token);
+                                resolve(res.body);
+                            }
+
+                        }
+                    });
+            }
+
+
         }
     });
 };
@@ -242,7 +269,7 @@ export const filesDelete = (ids) => {
                 oauth_token: Storage.getItem('access_token')
             })
             .send({
-                file_ids: (_.isArray(ids)) ?  _.join(ids, ',') : ids
+                file_ids: (_.isArray(ids)) ? _.join(ids, ',') : ids
             })
             .end((err, res) => {
                 if (err) {
@@ -266,7 +293,7 @@ export const zipCreate = (ids) => {
                 oauth_token: Storage.getItem('access_token')
             })
             .send({
-                file_ids: (_.isArray(ids)) ?  _.join(ids, ',') : ids
+                file_ids: (_.isArray(ids)) ? _.join(ids, ',') : ids
             })
             .end((err, res) => {
                 if (err) {
