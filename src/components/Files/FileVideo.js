@@ -8,34 +8,40 @@ export default class FileVideo extends React.Component {
 
         const options = {
             controls: true,
-            preload: "auto",
-            autoplay: true,
+            preload: 'auto',
             poster: file.screenshot,
-            sources: [{
-                src: file.mp4_stream_url || file.stream_url,
-                type: "video/mp4"
-            }]
+            sources: [
+                {
+                    src: file.mp4_stream_url || file.stream_url,
+                    type: 'video/mp4'
+                }
+            ]
         };
 
-        this.player = videojs(this.videoNode, options, function() {
-            console.log("onPlayerReady", this)
+        this.player = videojs(this.videoNode, options, () => {
+            console.log('onPlayerReady', this)
         });
     }
     componentWillUnmount() {
         if (this.player) {
-            this.player.dispose();
+            this
+                .player
+                .dispose();
         }
     }
     render() {
         return (
             <div style={{
-                textAlign: "center",
+                textAlign: 'center',
                 padding: 20,
-                backgroundColor: "black",
+                backgroundColor: 'black',
                 marginTop: 1
-            }} >
+            }}>
                 <div data-vjs-player>
-                    <video ref={node => this.videoNode = node } className="video-js"></video>
+                    <video ref={node => this.videoNode = node} className="video-js" style={{
+                        width: '100%',
+                        height: 500
+                    }}></video>
                 </div>
             </div>
         );
