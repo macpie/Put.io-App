@@ -9,6 +9,7 @@ export default class FileVideo extends React.Component {
         const options = {
             controls: true,
             preload: "auto",
+            autoplay: true,
             poster: file.screenshot,
             sources: [{
                 src: file.mp4_stream_url || file.stream_url,
@@ -16,7 +17,7 @@ export default class FileVideo extends React.Component {
             }]
         };
 
-        this.player = videojs(this.videoNode, options, () => {
+        this.player = videojs(this.videoNode, options, function() {
             console.log("onPlayerReady", this)
         });
     }
@@ -33,10 +34,8 @@ export default class FileVideo extends React.Component {
                 backgroundColor: "black",
                 marginTop: 1
             }} >
-                <div data-vjs-player={true} style={{
-                    display: "inline-block"
-                }}>
-                    <video ref={(node) => {this.videoNode = node} } className="video-js"></video>
+                <div data-vjs-player>
+                    <video ref={node => this.videoNode = node } className="video-js"></video>
                 </div>
             </div>
         );

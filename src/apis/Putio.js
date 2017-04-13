@@ -3,7 +3,6 @@ import Promise from 'promise';
 import * as _ from 'lodash';
 import * as Storage from '../utils/Storage';
 import {
-    OAUTH_SERVER,
     CLIENT_ID
 } from '../config.json';
 

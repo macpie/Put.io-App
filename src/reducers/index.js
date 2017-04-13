@@ -4,9 +4,6 @@ import {
 import {
     routerReducer
 } from 'react-router-redux';
-import {
-    loadingBarReducer
-} from 'react-redux-loading-bar';
 import menu from './Menu';
 import user from './User';
 import events from './Events';
@@ -20,7 +17,6 @@ import stream from './Stream';
 
 export default combineReducers({
     routing: routerReducer,
-    loadingBar: loadingBarReducer,
     menu,
     user,
     events,
