@@ -26,10 +26,15 @@ export default class TransferItem extends React.Component {
         return (
             <ListItem
                 key={transfer.id}
-                primaryText={<div style={{
-                    textOverflow: 'ellipsis',
-                    overflow: 'hidden',
-                    whiteSpace: 'nowrap'}}>{transfer.name}</div> }
+                primaryText={
+                    <div style={{
+                        textOverflow: 'ellipsis',
+                        overflow: 'hidden',
+                        whiteSpace: 'nowrap'}}
+                    >
+                        {transfer.name}
+                    </div>
+                }
                 secondaryText={<LinearProgress mode="determinate" value={transfer.percent_done} />}
                 leftIcon={leftIcon}
                 rightIconButton={righIcon}

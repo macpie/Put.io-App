@@ -8,7 +8,7 @@ import * as utility from '../../utils';
 
 export default class EventsList extends React.Component {
     render() {
-        const {events, onSelect} = this.props;
+        const {events, select} = this.props;
 
         if (_.isEmpty(events)) {
             return (
@@ -26,7 +26,6 @@ export default class EventsList extends React.Component {
                 };
 
             events.forEach((e) => {
-
                 let pText = (
                         <h3 style={{
                             margin: '5px 0',
@@ -50,7 +49,7 @@ export default class EventsList extends React.Component {
                         key={e.id}
                         primaryText={pText}
                         secondaryText={sText}
-                        onClick={(ev) => {onSelect(e, ev)}}
+                        onClick={(ev) => {select(e, ev)}}
                     />
                 );
             });
@@ -66,6 +65,6 @@ export default class EventsList extends React.Component {
 };
 
 EventsList.propTypes = {
-    events: PropTypes.array,
-    onSelect: PropTypes.func
+    events: PropTypes.array.isRequired,
+    select: PropTypes.func.isRequired
 }

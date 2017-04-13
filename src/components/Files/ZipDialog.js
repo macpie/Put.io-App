@@ -29,13 +29,15 @@ export default class ZipDialog extends React.Component {
     render() {
         const {zip} = this.props;
 
+
+
         const actions = [
             <FlatButton
                 label="Cancel"
                 onTouchTap={this.handleClose}
             />,
             <FlatButton
-                href={zip.url}
+                href={(typeof zip.url === 'string') ? zip.url : ''}
                 onTouchTap={this.handleClose}
                 label="Download"
                 primary={true}

@@ -13,7 +13,7 @@ export default class Events extends React.Component {
 
         eventsActions.getAll();
     }
-    handleOnSelect = (event, e) => {
+    handleSelect = (event, e) => {
         const {goTo} = this.props;
 
         if (event.file_id) {
@@ -51,9 +51,9 @@ export default class Events extends React.Component {
             <Col id="Events" xs={12}>
                 <Paper zDepth={1}>
                     <Tabs>
-                        {EventTab('Today', todayEvents, this.handleOnSelect)}
-                        {EventTab('Last Week', weekEvents, this.handleOnSelect)}
-                        {EventTab('Last Month', monthEvents, this.handleOnSelect)}
+                        {EventTab('Today', todayEvents, this.handleSelect)}
+                        {EventTab('Last Week', weekEvents, this.handleSelect)}
+                        {EventTab('Last Month', monthEvents, this.handleSelect)}
                     </Tabs>
                 </Paper>
             </Col>

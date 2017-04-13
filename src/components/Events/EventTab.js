@@ -3,7 +3,7 @@ import {Tab} from 'material-ui/Tabs';
 import Badge from 'material-ui/Badge';
 import EventsList from './EventsList';
 
-export default function(title, events, onSelect)  {
+export default function(title, events, select)  {
     if(!events.length) {
         return null;
     } else {
@@ -13,7 +13,7 @@ export default function(title, events, onSelect)  {
                 width: 20,
                 height: 20
             }} badgeContent={events.length}>{title}</Badge>}>
-                <EventsList events={events} onSelect={onSelect} />
+                <EventsList events={events} select={select} />
             </Tab>
         );
     }
