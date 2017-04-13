@@ -4,6 +4,9 @@ import {
 import {
     connect
 } from 'react-redux';
+import {
+    push
+} from 'react-router-redux';
 import * as TransfersActions from '../actions/Transfers';
 import Transfers from '../components/Transfers';
 
@@ -15,7 +18,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        transfersActions: bindActionCreators(TransfersActions, dispatch)
+        transfersActions: bindActionCreators(TransfersActions, dispatch),
+        goTo: (dest) => {
+            dispatch(push(dest));
+        }
     };
 };
 

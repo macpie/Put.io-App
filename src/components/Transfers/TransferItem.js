@@ -13,14 +13,14 @@ import {
 
 export default class TransferItem extends React.Component {
     render() {
-        const {transfer, cancel} = this.props;
+        const {transfer, cancel, select} = this.props;
 
         let leftIcon = (<DownlaodIncon color={COLORS.ORANGE} />),
             righIcon = (<IconButton><CancelIncon color={COLORS.RED} onClick={() => {cancel(transfer.id)}} /></IconButton>);
 
         if(transfer.status === 'COMPLETED') {
             leftIcon = (<CheckIncon color={COLORS.GREEN} />);
-            righIcon = (<IconButton> <FwIncon /> </IconButton>);
+            righIcon = (<IconButton onClick={(e) => {select(transfer, e)}}> <FwIncon /> </IconButton>);
         }
 
         return (
@@ -52,5 +52,6 @@ export default class TransferItem extends React.Component {
 
 TransferItem.propTypes = {
     transfer: PropTypes.object.isRequired,
-    cancel: PropTypes.func.isRequired
+    cancel: PropTypes.func.isRequired,
+    select: PropTypes.func
 };

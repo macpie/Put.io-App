@@ -11,9 +11,6 @@ export default class Transfers extends React.Component {
     constructor(props) {
         super(props);
 
-        this.handleClean = this.handleClean.bind(this);
-        this.handleCancel = this.handleCancel.bind(this);
-
         const {transfersActions} = props;
 
         transfersActions.getAll();
@@ -27,19 +24,26 @@ export default class Transfers extends React.Component {
     componentWillUnmount() {
         clearInterval(this.state.interval);
     }
-    handleClean(e) {
+    handleClean = (e) => {
         e.preventDefault();
 
         const {transfersActions} = this.props;
 
         transfersActions.clean();
     }
-    handleCancel(id, e) {
+    handleCancel = (id, e) => {
         e.preventDefault();
 
         const {transfersActions} = this.props;
 
         transfersActions.cancel(id);
+    }
+    handleSelect = (transfer, e) => {
+        const {goTo} = this.props;
+
+        if (transfer.file_id) {
+            goTo("/files/" + transfer.file_id);
+        }
     }
     render() {
         const {transfers} = this.props;
@@ -56,7 +60,7 @@ export default class Transfers extends React.Component {
             let listItems = [];
 
             transfers.forEach((transfer) => {
-                listItems.push(<TransferItem key={transfer.id} transfer={transfer} cancel={this.handleCancel}/>);
+                listItems.push(<TransferItem key={transfer.id} transfer={transfer} cancel={this.handleCancel} select={this.handleSelect}/>);
             });
 
             return (
