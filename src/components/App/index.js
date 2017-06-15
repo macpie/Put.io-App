@@ -1,12 +1,57 @@
 import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Grid, Row} from 'react-flexbox-grid/lib';
+import {NotificationStack} from 'react-notification';
+import * as _ from 'lodash';
 import Header from '../../containers/Header';
 import Menu from '../Menu';
 
 export default class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        const {errors} = this.props;
+
+        this.state = {
+            notifications: _.map(errors, (error) => {
+                return {
+                    isActive: true,
+                    title: "Error",
+                    message: error.error_message,
+                    key: error.id,
+                    action: 'Dismiss',
+                    dismissAfter: false,
+                    onClick: this.handleClick
+                };
+            })
+        };
+    }
+    componentWillReceiveProps(nextProps) {
+        const {errors} = nextProps;
+
+        this.setState({
+            notifications: _.map(errors, (error) => {
+                return {
+                    isActive: true,
+                    title: "Error",
+                    message: error.error_message,
+                    key: error.id,
+                    action: 'Dismiss',
+                    dismissAfter: false,
+                    onClick: this.handleClick
+                };
+            })
+        });
+    }
+    handleClick = (notification, deactivate) => {
+        const {errorsActions} = this.props;
+
+        deactivate();
+        errorsActions.dismiss(notification.key);
+    }
     render() {
         const {menu, menuActions, routeActions} = this.props;
+        const {notifications} = this.state;
 
         return (
             <MuiThemeProvider>
@@ -25,6 +70,12 @@ export default class App extends React.Component {
                         marginLeft: 0
                     }}>
                         {this.props.children}
+                    </Row>
+                    <Row>
+                        <NotificationStack
+                            notifications={notifications}
+                            onDismiss={() => {}}
+                       />
                     </Row>
                 </Grid>
             </MuiThemeProvider>

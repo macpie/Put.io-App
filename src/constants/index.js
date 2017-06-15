@@ -15,6 +15,7 @@ export const FILES_DELETE = 'FILES_DELETE';
 export const ZIP_CREATE = 'ZIP_CREATE';
 export const ZIP_GET = 'ZIP_GET';
 export const ZIP_CLEAR = 'ZIP_CLEAR';
+export const ERROR_DISMISS = 'ERROR_DISMISS';
 
 // Colors
 export const COLORS = {

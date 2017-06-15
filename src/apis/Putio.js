@@ -30,7 +30,7 @@ export const authenticate = () => {
                 .set(HEADERS)
                 .end((err, res) => {
                     if (err) {
-                        reject(err);
+                        reject(res.body, err);
                     } else {
                         console.log(res);
                         if (res.type === 'text/html') {
@@ -57,7 +57,7 @@ export const eventsList = () => {
             })
             .end((err, res) => {
                 if (err) {
-                    reject(err);
+                    reject(res.body, err);
                 } else {
                     resolve(res.body.events || []);
                 }
@@ -75,7 +75,7 @@ export const accountInfo = () => {
             })
             .end((err, res) => {
                 if (err) {
-                    reject(err);
+                    reject(res.body, err);
                 } else {
                     resolve(res.body.info || {});
                 }
@@ -93,7 +93,7 @@ export const transfersList = () => {
             })
             .end((err, res) => {
                 if (err) {
-                    reject(err);
+                    reject(res.body, err);
                 } else {
                     resolve(res.body.transfers || []);
                 }
@@ -111,7 +111,7 @@ export const transfersClean = () => {
             })
             .end((err, res) => {
                 if (err) {
-                    reject(err);
+                    reject(res.body, err);
                 } else {
                     resolve(res.body || {});
                 }
@@ -132,7 +132,7 @@ export const transferCancel = (id) => {
             })
             .end((err, res) => {
                 if (err) {
-                    reject(err);
+                    reject(res.body, err);
                 } else {
                     resolve(res.body || {});
                 }
@@ -164,7 +164,7 @@ export const filesList = (id = 0) => {
             })
             .end((err, res) => {
                 if (err) {
-                    reject(err);
+                    reject(res.body, err);
                 } else {
                     resolve(res.body || {});
                 }
@@ -182,7 +182,7 @@ export const fileStream = (id) => {
             })
             .end((err, res) => {
                 if (err) {
-                    reject(err);
+                    reject(res.body, err);
                 } else {
                     resolve(res.body || res.text);
                 }
@@ -204,7 +204,7 @@ export const createFolder = (parent_id = 0, name) => {
             })
             .end((err, res) => {
                 if (err) {
-                    reject(err);
+                    reject(res.body, err);
                 } else {
                     resolve(res.body || {});
                 }
@@ -226,7 +226,7 @@ export const fileRename = (file_id, name) => {
             })
             .end((err, res) => {
                 if (err) {
-                    reject(err);
+                    reject(res.body, err);
                 } else {
                     resolve(res.body || {});
                 }
@@ -247,7 +247,7 @@ export const filesDelete = (ids) => {
             })
             .end((err, res) => {
                 if (err) {
-                    reject(err);
+                    reject(res.body, err);
                 } else {
                     let result = res.body || {};
 
@@ -271,7 +271,7 @@ export const zipCreate = (ids) => {
             })
             .end((err, res) => {
                 if (err) {
-                    reject(err);
+                    reject(res.body, err);
                 } else {
                     let result = res.body || {};
 
@@ -292,7 +292,7 @@ export const zip = (id) => {
             })
             .end((err, res) => {
                 if (err) {
-                    reject(err);
+                    reject(res.body, err);
                 } else {
                     let result = res.body || {};
 
