@@ -9,6 +9,8 @@ export default (state = {}, {
     switch (type) {
         case `${USER_AUTHENTICATE}_RESOLVED`:
             return payload;
+        case `${USER_AUTHENTICATE}`:
+            return payload;
         default:
             return state;
     }

@@ -1,20 +1,24 @@
 import {
+    bindActionCreators
+} from 'redux';
+import {
     connect
 } from 'react-redux';
 import {
     routerActions
 } from 'react-router-redux'
-import Welcome from '../components/Welcome';
+import * as AuthActions from '../actions/Auth';
+import Settings from '../components/Settings';
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
     return {
-        user: state.user,
-        redirect: props.location.query.redirect || '/events'
+        user: state.user
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        authActions: bindActionCreators(AuthActions, dispatch),
         replace: (dest) => {
             dispatch(routerActions.replace(dest));
         }
@@ -24,4 +28,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Welcome);
+)(Settings);

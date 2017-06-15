@@ -3,29 +3,18 @@ import Promise from 'promise';
 import * as _ from 'lodash';
 import * as Storage from '../utils/Storage';
 import {
-    CLIENT_ID
+    CLIENT_ID,
+    PUTIO_URL,
+    CODE_URL,
 } from '../config.json';
 
-const BASE_URL = 'https://api.put.io/v2';
 const HEADERS = {
     'Content-Type': 'application/x-www-form-urlencoded',
     'Accept': 'application/json'
 };
-const parseHash = () => {
-    var hash = (window.location.hash || '')
-        .replace(/^#/, '')
-        .split('&'),
-        parsed = {};
-
-    for (var i = 0, el; i < hash.length; i++) {
-        el = hash[i].split('=')
-        parsed[el[0]] = el[1];
-    }
-    return parsed;
-};
 
 export const downloadLink = (id) => {
-    return BASE_URL + '/files/' + id + '/download?oauth_token=' + Storage.getItem('access_token');
+    return PUTIO_URL + '/files/' + id + '/download?oauth_token=' + Storage.getItem('access_token');
 };
 
 export const authenticate = () => {
@@ -35,39 +24,25 @@ export const authenticate = () => {
                 access_token: Storage.getItem('access_token')
             });
         } else {
-            var hash = parseHash();
-
-            if (hash.access_token) {
-                Storage.setItem('access_token', hash.access_token);
-
-                resolve({
-                    access_token: hash.access_token
-                });
-            } else {
-                const redirect = window.location.origin;
-
-                request
-                    .get(BASE_URL + '/oauth2/authenticate')
-                    .query('client_id=' + CLIENT_ID + '&response_type=token&redirect_uri=' + redirect)
-                    .set(HEADERS)
-                    .end((err, res) => {
-                        if (err) {
-                            reject(err);
+            request
+                .get(PUTIO_URL + '/oauth2/authenticate')
+                .query('client_id=' + CLIENT_ID + '&response_type=token&redirect_uri=' + CODE_URL)
+                .set(HEADERS)
+                .end((err, res) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        console.log(res);
+                        if (res.type === 'text/html') {
+                            window.open(res.req.url, "_blank");
+                            reject();
                         } else {
-                            console.log(res);
-                            if (res.type === 'text/html') {
-                                window.open(res.req.url, "_self");
-                                reject();
-                            } else {
-                                Storage.setItem('access_token', res.body.access_token);
-                                resolve(res.body);
-                            }
-
+                            Storage.setItem('access_token', res.body.access_token);
+                            resolve(res.body);
                         }
-                    });
-            }
 
-
+                    }
+                });
         }
     });
 };
@@ -75,7 +50,7 @@ export const authenticate = () => {
 export const eventsList = () => {
     return new Promise((resolve, reject) => {
         request
-            .get(BASE_URL + '/events/list')
+            .get(PUTIO_URL + '/events/list')
             .set(HEADERS)
             .query({
                 oauth_token: Storage.getItem('access_token'),
@@ -93,7 +68,7 @@ export const eventsList = () => {
 export const accountInfo = () => {
     return new Promise((resolve, reject) => {
         request
-            .get(BASE_URL + '/account/info')
+            .get(PUTIO_URL + '/account/info')
             .set(HEADERS)
             .query({
                 oauth_token: Storage.getItem('access_token'),
@@ -111,7 +86,7 @@ export const accountInfo = () => {
 export const transfersList = () => {
     return new Promise((resolve, reject) => {
         request
-            .get(BASE_URL + '/transfers/list')
+            .get(PUTIO_URL + '/transfers/list')
             .set(HEADERS)
             .query({
                 oauth_token: Storage.getItem('access_token'),
@@ -129,7 +104,7 @@ export const transfersList = () => {
 export const transfersClean = () => {
     return new Promise((resolve, reject) => {
         request
-            .post(BASE_URL + '/transfers/clean')
+            .post(PUTIO_URL + '/transfers/clean')
             .set(HEADERS)
             .query({
                 oauth_token: Storage.getItem('access_token'),
@@ -147,7 +122,7 @@ export const transfersClean = () => {
 export const transferCancel = (id) => {
     return new Promise((resolve, reject) => {
         request
-            .post(BASE_URL + '/transfers/cancel')
+            .post(PUTIO_URL + '/transfers/cancel')
             .set(HEADERS)
             .query({
                 oauth_token: Storage.getItem('access_token')
@@ -168,7 +143,7 @@ export const transferCancel = (id) => {
 export const filesList = (id = 0) => {
     return new Promise((resolve, reject) => {
         request
-            .get(BASE_URL + '/files/list')
+            .get(PUTIO_URL + '/files/list')
             .set(HEADERS)
             .query({
                 oauth_token: Storage.getItem('access_token'),
@@ -200,7 +175,7 @@ export const filesList = (id = 0) => {
 export const fileStream = (id) => {
     return new Promise((resolve, reject) => {
         request
-            .get(BASE_URL + '/files/' + id + '/stream')
+            .get(PUTIO_URL + '/files/' + id + '/stream')
             .set(HEADERS)
             .query({
                 oauth_token: Storage.getItem('access_token'),
@@ -218,7 +193,7 @@ export const fileStream = (id) => {
 export const createFolder = (parent_id = 0, name) => {
     return new Promise((resolve, reject) => {
         request
-            .post(BASE_URL + '/files/create-folder')
+            .post(PUTIO_URL + '/files/create-folder')
             .set(HEADERS)
             .query({
                 oauth_token: Storage.getItem('access_token')
@@ -240,7 +215,7 @@ export const createFolder = (parent_id = 0, name) => {
 export const fileRename = (file_id, name) => {
     return new Promise((resolve, reject) => {
         request
-            .post(BASE_URL + '/files/rename')
+            .post(PUTIO_URL + '/files/rename')
             .set(HEADERS)
             .query({
                 oauth_token: Storage.getItem('access_token')
@@ -262,7 +237,7 @@ export const fileRename = (file_id, name) => {
 export const filesDelete = (ids) => {
     return new Promise((resolve, reject) => {
         request
-            .post(BASE_URL + '/files/delete')
+            .post(PUTIO_URL + '/files/delete')
             .set(HEADERS)
             .query({
                 oauth_token: Storage.getItem('access_token')
@@ -286,7 +261,7 @@ export const filesDelete = (ids) => {
 export const zipCreate = (ids) => {
     return new Promise((resolve, reject) => {
         request
-            .post(BASE_URL + '/zips/create')
+            .post(PUTIO_URL + '/zips/create')
             .set(HEADERS)
             .query({
                 oauth_token: Storage.getItem('access_token')
@@ -310,7 +285,7 @@ export const zipCreate = (ids) => {
 export const zip = (id) => {
     return new Promise((resolve, reject) => {
         request
-            .get(BASE_URL + '/zips/' + id)
+            .get(PUTIO_URL + '/zips/' + id)
             .set(HEADERS)
             .query({
                 oauth_token: Storage.getItem('access_token')

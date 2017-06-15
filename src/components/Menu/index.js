@@ -5,6 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import EventIcon from 'material-ui/svg-icons/action/event';
 import TransferIcon from 'material-ui/svg-icons/action/swap-horiz';
 import FolderIcon from 'material-ui/svg-icons/file/folder';
+import SettingsIcon from 'material-ui/svg-icons/action/settings';
 
 export default class Menu extends React.Component {
     render() {
@@ -42,6 +43,15 @@ export default class Menu extends React.Component {
                     }}
                 >
                     Files
+                </MenuItem>
+                <MenuItem
+                    leftIcon={<SettingsIcon />}
+                    onClick={() => {
+                        this.props.push('/settings?stopRedirect=1');
+                        this.props.menuToggle();
+                    }}
+                >
+                    Settings
                 </MenuItem>
             </Drawer>
         );
