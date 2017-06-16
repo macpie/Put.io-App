@@ -6,7 +6,9 @@
   "description": "Extension for put.io. Add torrent directly by right clicking, view your account informations",
   "permissions": [
     "http://*/",
-    "https://*/"
+    "https://*/",
+    "contextMenus",
+    "notifications"
   ],
   "web_accessible_resources": [
     "index.html"
@@ -14,6 +16,9 @@
   "browser_action": {
     "default_icon": "img/icon.png",
     "default_popup": "index.html"
+  },
+  "background": {
+    "page": "background.html"
   },
   "icons": {
     "16": "img/icon16.png",

@@ -18,6 +18,11 @@ module.exports = function(grunt) {
                 }, {
                     src: 'chrome/manifest.json',
                     dest: 'chrome/build/manifest.json'
+                }, {
+                    expand: true,
+                    flatten: true,
+                    src: 'chrome/background/*',
+                    dest: 'chrome/build/'
                 }]
             }
         },
@@ -25,12 +30,27 @@ module.exports = function(grunt) {
             chrome: {
                 command: 'npm run build'
             }
+        },
+        watch: {
+            options: {
+                interrupt: true,
+            },
+            files: [
+                'src/**',
+                'public/**',
+                'img/**',
+                'chrome/background/**',
+                'chrome/manifest.json',
+            ],
+            tasks: ['chrome-light']
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('chrome', ['clean:chrome', 'shell:chrome', 'copy:chrome',]);
+    grunt.registerTask('chrome', ['clean:chrome', 'shell:chrome', 'copy:chrome']);
+    grunt.registerTask('chrome-light', ['clean:chrome', 'copy:chrome']);
 }

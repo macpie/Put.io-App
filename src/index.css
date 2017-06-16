@@ -2,3 +2,7 @@ body {
   min-width: 600px;
   min-height: 400px;
 }
+
+#root {
+  margin-bottom: 25px;
+}
