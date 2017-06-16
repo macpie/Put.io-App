@@ -4,6 +4,7 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as Storage from '../../utils/Storage';
+import * as Putio from '../../apis/Putio';
 
 export default class Settings extends React.Component {
     constructor(props) {
@@ -52,6 +53,17 @@ export default class Settings extends React.Component {
                         padding: 5,
                         textAlign: 'center'
                     }} zDepth={1}>
+                    <p>
+                        Clink the link below to get your access token.
+                    </p>
+                    <p>
+                        Then copy and paste it in the text box and hit save.
+                    </p>
+                    <p>
+                        <a target="_blank" href={Putio.authenticateLink()}>
+                            Get your Access Token here
+                        </a>
+                    </p>
                     <TextField
                         inputStyle={{
                             textAlign: 'center'

@@ -1,6 +1,8 @@
 import React from 'react';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
+import Subheader from 'material-ui/Subheader';
+import RaisedButton from 'material-ui/RaisedButton';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import ConvertIcon from 'material-ui/svg-icons/image/switch-video';
@@ -35,7 +37,7 @@ export default class FileVideo extends React.Component {
         }
     }
     render() {
-        const {mp4} = this.props;
+        const {mp4, file} = this.props;
 
         const convertStatus = () => {
             if(mp4.status) {
@@ -62,6 +64,14 @@ export default class FileVideo extends React.Component {
                 backgroundColor: 'black',
                 marginTop: 1
             }}>
+                <Subheader style={{color: 'white'}}>
+                    <RaisedButton
+                        label="Open in popup"
+                        href={"https://app.put.io/files/" + file.id + "?popup=true&autostart=true"}
+                        fullWidth={true}
+                        target="_blank"
+                    />
+                </Subheader>
                 {convertStatus()}
                 <div data-vjs-player>
                     <video ref={node => this.videoNode = node} className="video-js" style={{

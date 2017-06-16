@@ -4,6 +4,7 @@ import {Grid, Row} from 'react-flexbox-grid/lib';
 import {NotificationStack} from 'react-notification';
 import * as _ from 'lodash';
 import Header from '../../containers/Header';
+import * as Utils from '../../utils';
 import Menu from '../Menu';
 
 export default class App extends React.Component {
@@ -17,10 +18,10 @@ export default class App extends React.Component {
                 return {
                     isActive: true,
                     title: "Error",
-                    message: error.error_message,
+                    message: Utils.cutString(error.error_message, 50),
                     key: error.id,
                     action: 'Dismiss',
-                    dismissAfter: false,
+                    dismissAfter: 5000,
                     onClick: this.handleClick
                 };
             })
@@ -34,10 +35,10 @@ export default class App extends React.Component {
                 return {
                     isActive: true,
                     title: "Error",
-                    message: error.error_message,
+                    message: Utils.cutString(error.error_message, 50),
                     key: error.id,
                     action: 'Dismiss',
-                    dismissAfter: false,
+                    dismissAfter: 5000,
                     onClick: this.handleClick
                 };
             })

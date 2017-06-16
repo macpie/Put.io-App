@@ -12,6 +12,7 @@ import Settings from './containers/Settings';
 import Events from './containers/Events';
 import Transfers from './containers/Transfers';
 import Files from './containers/Files';
+import './index.css';
 
 injectTapEventPlugin();
 

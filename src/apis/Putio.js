@@ -17,6 +17,10 @@ export const downloadLink = (id) => {
     return PUTIO_URL + '/files/' + id + '/download?oauth_token=' + Storage.getItem('access_token');
 };
 
+export const authenticateLink = () => {
+    return PUTIO_URL + '/oauth2/authenticate?client_id=' + CLIENT_ID + '&response_type=token&redirect_uri=' + CODE_URL;
+};
+
 export const authenticate = () => {
     return new Promise((resolve, reject) => {
         if (Storage.getItem('access_token')) {
@@ -32,10 +36,11 @@ export const authenticate = () => {
                     if (err) {
                         reject(res.body, err);
                     } else {
-                        console.log(res);
                         if (res.type === 'text/html') {
-                            window.open(res.req.url, "_blank");
-                            reject();
+                            reject({
+                                id: "authenticate",
+                                error_message: "Authentication Failed"
+                            });
                         } else {
                             Storage.setItem('access_token', res.body.access_token);
                             resolve(res.body);
