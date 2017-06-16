@@ -9,7 +9,17 @@ import FileVideo from './FileVideo';
 
 export default class File extends React.Component {
     state = {
-        renameFile: {}
+        renameFile: {},
+        interval: null
+    }
+    componentWillReceiveProps(nextProps) {
+        const {mp4, filesActions} = nextProps;
+        const {interval} = this.state;
+
+        if(mp4.status === "COMPLETED") {
+            clearInterval(interval);
+            filesActions.mp4StatusReset();
+        }
     }
     handleReset = () => {
         this.setState({
@@ -26,8 +36,20 @@ export default class File extends React.Component {
         filesActions.rename(renameFile.id, name);
         this.setState({renameFile: {}});
     }
+    handleConvert = (id) => {
+        const {filesActions} = this.props;
+        filesActions.mp4(id);
+
+        var interval = setInterval(() => {
+            filesActions.mp4Status(id);
+        }, 3000);
+
+        this.setState({
+            interval: interval
+        });
+    }
     render() {
-        const {breadcrumbs, parent, goTo, filesActions, stream} = this.props;
+        const {breadcrumbs, parent, goTo, filesActions, stream, mp4} = this.props;
         const {renameFile} = this.state;
 
         const content = () => {
@@ -35,7 +57,7 @@ export default class File extends React.Component {
                 case "TEXT":
                     return <FileText file={parent} filesActions={filesActions} content={stream} />;
                 case "VIDEO":
-                    return <FileVideo file={parent} />
+                    return <FileVideo file={parent} convert={this.handleConvert} mp4={mp4} />
                 default:
                     return null;
             }

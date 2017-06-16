@@ -302,3 +302,45 @@ export const zip = (id) => {
             });
     });
 };
+
+
+export const fileMp4 = (id) => {
+    return new Promise((resolve, reject) => {
+        request
+            .post(PUTIO_URL + '/files/' + id + '/mp4')
+            .set(HEADERS)
+            .query({
+                oauth_token: Storage.getItem('access_token')
+            })
+            .end((err, res) => {
+                if (err) {
+                    reject(res.body, err);
+                } else {
+                    let result = res.body || {};
+
+                    resolve(result);
+                }
+            });
+    });
+};
+
+
+export const fileMp4Status = (id) => {
+    return new Promise((resolve, reject) => {
+        request
+            .get(PUTIO_URL + '/files/' + id + '/mp4')
+            .set(HEADERS)
+            .query({
+                oauth_token: Storage.getItem('access_token')
+            })
+            .end((err, res) => {
+                if (err) {
+                    reject(res.body, err);
+                } else {
+                    let result = res.body || {};
+
+                    resolve(result.mp4 || {});
+                }
+            });
+    });
+};

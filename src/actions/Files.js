@@ -5,7 +5,10 @@ import {
     FILE_RENAME,
     FILES_DELETE,
     FILE_STREAM,
-    CLEAR_STREAM
+    CLEAR_STREAM,
+    FILE_MP4,
+    FILE_MP4_STATUS,
+    FILE_MP4_STATUS_RESET
 } from '../constants';
 
 export const get = (id) => {
@@ -56,5 +59,25 @@ export const remove = (ids) => {
     return {
         type: FILES_DELETE,
         payload: PutioApis.filesDelete(ids)
+    };
+};
+
+export const mp4 = (id) => {
+    return {
+        type: FILE_MP4,
+        payload: PutioApis.fileMp4(id)
+    };
+};
+
+export const mp4Status = (id) => {
+    return {
+        type: FILE_MP4_STATUS,
+        payload: PutioApis.fileMp4Status(id)
+    };
+};
+
+export const mp4StatusReset = () => {
+    return {
+        type: FILE_MP4_STATUS_RESET
     };
 };

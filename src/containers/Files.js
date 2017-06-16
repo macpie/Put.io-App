@@ -17,7 +17,8 @@ const mapStateToProps = (state, props) => {
         breadcrumbs: state.breadcrumbs,
         parent: state.parent,
         zip: state.zip,
-        stream: state.stream
+        stream: state.stream,
+        mp4: state.mp4
     };
 };
 
