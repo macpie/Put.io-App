@@ -1,31 +1,13 @@
 import React from 'react';
-import CircularProgress from 'material-ui/CircularProgress';
-import Popover from 'material-ui/Popover';
+import Chip from 'material-ui/Chip';
+import * as Utils from '../../utils';
 
 export default class DiskBar extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            open: false
-        };
-    }
-    handleMouseOver = (e) => {
-        e.preventDefault();
-
-        this.setState({open: true, anchorEl: e.currentTarget});
-
-        setTimeout(() => {
-            this.setState({open: false});
-        }, 3000);
-    }
-    handleRequestClose = () => {
-        this.setState({open: false});
-    }
     render() {
-        const {value, popover} = this.props;
+        const {disk} = this.props;
 
-        let color = 'white';
+        let value = Math.round(((100 * disk.used) / disk.size)),
+            color = 'white';
 
         if (value >= 75) {
             color = 'red';
@@ -36,27 +18,14 @@ export default class DiskBar extends React.Component {
         }
 
         return (
-            <div style={{
-                width: 40,
-                height: 40
-            }}>
-                <CircularProgress style={{
-                    transform: 'rotate(-90deg)'
-                }} onMouseOver={this.handleMouseOver} mode="determinate" color={color} value={value}/>
-                <Popover open={this.state.open} anchorEl={this.state.anchorEl} anchorOrigin={{
-                    horizontal: 'left',
-                    vertical: 'top'
-                }} targetOrigin={{
-                    horizontal: 'middle',
-                    vertical: 'bottom'
-                }} style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.75)',
-                    padding: 5,
-                    borderRadius: 10
-                }}>
-                    {popover}
-                </Popover>
-            </div>
+            <div id="DiskBar">
+                <Chip
+                    style={{backgroundColor: 'rgb(255, 64, 129)'}}
+                    labelStyle={{fontWeight: 'bold', color: 'white'}}
+                >
+                    {value + ' %'}
+                </Chip>
+          </div>
         );
     }
 };

@@ -42,7 +42,7 @@ module.exports = function(grunt) {
                 'chrome/background/**',
                 'chrome/manifest.json',
             ],
-            tasks: ['chrome-light']
+            tasks: ['chrome']
         }
     });
 

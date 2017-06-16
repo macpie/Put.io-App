@@ -4,7 +4,6 @@ import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import HeadlineIcon from 'material-ui/svg-icons/action/view-headline';
 import DiskBar from './DiskBar';
-import * as utility from '../../utils';
 
 export default class Header extends React.Component {
     constructor(props) {
@@ -26,15 +25,6 @@ export default class Header extends React.Component {
     render() {
         const {disk} = this.props.account;
 
-        let value = 0,
-            popover = '';
-
-        if (disk) {
-            value = Math.round(((100 * disk.used) / disk.size));
-            popover += value + '% ';
-            popover += utility.bytesToString(disk.used) + ' / ' + utility.bytesToString(disk.size);
-        }
-
         return (
             <Col id="Header" xs={12}>
                 <Toolbar style={{
@@ -54,7 +44,7 @@ export default class Header extends React.Component {
                     <ToolbarGroup style={{
                         marginRight: 0
                     }} lastChild={true}>
-                        <DiskBar value={value} popover={popover}/>
+                        <DiskBar disk={disk || {}}/>
                     </ToolbarGroup>
                 </Toolbar>
             </Col>
