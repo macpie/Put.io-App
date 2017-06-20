@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Chip from 'material-ui/Chip';
 
 export default class DiskBar extends React.Component {
@@ -14,10 +15,17 @@ export default class DiskBar extends React.Component {
                     >
                         {Math.round(((100 * disk.used) / disk.size)) + ' %'}
                     </Chip>
-              </div>
+                </div>
             );
         } else {
-            return null;
+            return <div id="DiskBar" />;
         }
     }
+};
+
+DiskBar.propTypes = {
+    disk: PropTypes.shape({
+        used: PropTypes.number,
+        size: PropTypes.number
+    })
 };
