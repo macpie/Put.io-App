@@ -16,6 +16,7 @@ export default class downloadLink extends React.Component {
                     onClick={(e) => {
                         e.stopPropagation()
                     }}
+                    target="_blank"
                 >
                     <DownloadIcon />
                 </IconButton>
