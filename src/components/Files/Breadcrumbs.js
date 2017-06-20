@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 import ChevronIcon from 'material-ui/svg-icons/navigation/chevron-right';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';

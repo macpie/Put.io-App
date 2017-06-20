@@ -5,7 +5,7 @@ import {
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Chip from 'material-ui/Chip';
-import DiskBar from '../../../src/components/Header/DiskBar';
+import DiskBar from '../../src/components/Header/DiskBar';
 
 describe('DiskBar component suite', function() {
 
