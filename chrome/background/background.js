@@ -1,8 +1,8 @@
-var TOKEN = null;
+var TOKEN = null,
+    DEFAULT_FOLDER = null;
 
 authenticate(function(token, settings) {
-    var defaultFolder = settings.default_download_folder || 0;
-
+    DEFAULT_FOLDER = settings.default_download_folder || 0;
     TOKEN = token;
 
     setupBadge();
@@ -97,7 +97,7 @@ function contextMenuClick(info) {
     request('POST', '/transfers/add', {
         oauth_token: TOKEN,
         url: info.linkUrl,
-        save_parent_id: defaultFolder
+        save_parent_id: DEFAULT_FOLDER
     }, function(data) {
         console.log("transfer started");
 
