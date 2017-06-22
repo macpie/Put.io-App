@@ -15,14 +15,14 @@ export default class Menu extends React.Component {
                 docked={false}
                 width={200}
                 open={this.props.open}
-                onRequestChange={this.props.menuToggle}
+                onRequestChange={this.props.toggle}
             >
                 <AppBar title="Menu" showMenuIconButton={false} />
                 <MenuItem
                     leftIcon={<EventIcon />}
                     onClick={() => {
                         this.props.push('/events');
-                        this.props.menuToggle();
+                        this.props.toggle();
                     }}
                 >
                     Events
@@ -31,7 +31,7 @@ export default class Menu extends React.Component {
                     leftIcon={<TransferIcon />}
                     onClick={() => {
                         this.props.push('/transfers');
-                        this.props.menuToggle();
+                        this.props.toggle();
                     }}
                 >
                     Transfers
@@ -40,7 +40,7 @@ export default class Menu extends React.Component {
                     leftIcon={<FolderIcon />}
                     onClick={() => {
                         this.props.push('/files');
-                        this.props.menuToggle();
+                        this.props.toggle();
                     }}
                 >
                     Files
@@ -49,7 +49,7 @@ export default class Menu extends React.Component {
                     leftIcon={<SettingsIcon />}
                     onClick={() => {
                         this.props.push('/settings?stopRedirect=1');
-                        this.props.menuToggle();
+                        this.props.toggle();
                     }}
                 >
                     Settings
@@ -61,6 +61,6 @@ export default class Menu extends React.Component {
 
 Menu.propTypes = {
     open: PropTypes.bool.isRequired,
-    menuToggle: PropTypes.func.isRequired,
+    toggle: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired
 };
