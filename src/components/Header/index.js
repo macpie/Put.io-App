@@ -9,15 +9,11 @@ export default class Header extends React.Component {
     constructor(props) {
         super(props);
 
-        this.handleMenuClick = this
-            .handleMenuClick
-            .bind(this);
-
         const {accountActions} = props;
 
         accountActions.info();
     }
-    handleMenuClick() {
+    handleMenuClick = () => {
         const {menuActions} = this.props;
 
         menuActions.toggle();

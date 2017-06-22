@@ -9,28 +9,26 @@ import * as utility from '../../utils';
 
 export default class EventsList extends React.Component {
     render() {
-        const {events, select} = this.props;
+        const {events, onSelect} = this.props;
 
         if (_.isEmpty(events)) {
             return (
-                <h2 style={{
-                    textAlign: 'center'
-                }}>No events</h2>
+                <h2 style={{textAlign: "center"}}>No events</h2>
             );
         } else {
             let listItem = [],
                 style = {
                     height: 16,
                     width: 16,
-                    margin: '0 2 0 12',
-                    color: 'rgba(0, 0, 0, 0.541176)'
+                    margin: "0 2 0 12",
+                    color: "rgba(0, 0, 0, 0.541176)"
                 };
 
             events.forEach((e) => {
                 let pText = (
                         <h3 style={{
-                            margin: '5px 0',
-                            wordBreak: 'break-all'
+                            margin: "5px 0",
+                            wordBreak: "break-all"
                         }}>{e.transfer_name || e.file_name}</h3>
                     ),
                     sText = (
@@ -50,7 +48,7 @@ export default class EventsList extends React.Component {
                         key={e.id}
                         primaryText={pText}
                         secondaryText={sText}
-                        onClick={(ev) => {select(e, ev)}}
+                        onClick={(ev) => {onSelect(e, ev)}}
                     />
                 );
             });
@@ -66,6 +64,6 @@ export default class EventsList extends React.Component {
 };
 
 EventsList.propTypes = {
-    events: PropTypes.array.isRequired,
-    select: PropTypes.func.isRequired
+    events: PropTypes.array,
+    onSelect: PropTypes.func.isRequired
 }

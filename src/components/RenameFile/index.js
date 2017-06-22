@@ -4,7 +4,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
-export default class RenameFolder extends React.Component {
+export default class RenameFile extends React.Component {
     state = {
         open: false,
         value: ''
@@ -23,10 +23,10 @@ export default class RenameFolder extends React.Component {
             value: '',
             open: false
         });
-        this.props.cancel();
+        this.props.onCancel();
     }
     handleCreate = () => {
-        this.props.rename(this.state.value);
+        this.props.onRename(this.state.value);
         this.handleClose();
     }
     handleChange = (e, value) => {
@@ -73,7 +73,8 @@ export default class RenameFolder extends React.Component {
     }
 };
 
-RenameFolder.propTypes = {
+RenameFile.propTypes = {
     name: PropTypes.string,
-    rename: PropTypes.func.isRequired
+    onRename: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired
 };

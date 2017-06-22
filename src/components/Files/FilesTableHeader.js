@@ -21,7 +21,7 @@ export default class FilesTableHeader extends React.Component {
         });
     }
     render() {
-        const {menuSelect, selectAll} = this.props;
+        const {onMenuSelect, onSelectAll} = this.props;
         const {openMenu} = this.state;
 
         const btn = (<RaisedButton onTouchTap={this.handleMenuToggle} label="Actions" icon={<SettingsIcon />} />);
@@ -31,7 +31,7 @@ export default class FilesTableHeader extends React.Component {
                 <TableHeaderColumn style={{
                     width: 24
                 }}>
-                    <Checkbox onCheck={selectAll} />
+                    <Checkbox onCheck={onSelectAll} />
                 </TableHeaderColumn>
                 <TableHeaderColumn style={{
                     width: 24
@@ -47,7 +47,7 @@ export default class FilesTableHeader extends React.Component {
                     <IconMenu
                         open={openMenu}
                         onRequestChange={this.handleMenuToggle}
-                        onChange={menuSelect}
+                        onChange={onMenuSelect}
                         iconButtonElement={btn}
                         anchorOrigin={{
                             vertical: 'bottom',
@@ -71,6 +71,6 @@ export default class FilesTableHeader extends React.Component {
 };
 
 FilesTableHeader.propTypes = {
-    selectAll: PropTypes.func,
-    menuSelect: PropTypes.func
+    onSelectAll: PropTypes.func,
+    onMenuSelect: PropTypes.func
 };

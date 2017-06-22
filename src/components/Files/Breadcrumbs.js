@@ -7,9 +7,9 @@ import * as _ from 'lodash';
 
 export default class Breadcrumbs extends React.Component {
     handleClick = () => {
-        const {edit, parent} = this.props;
+        const {onEdit, parent} = this.props;
 
-        if(_.isFunction(edit)) edit(parent.id, parent.name);
+        if(_.isFunction(onEdit)) onEdit(parent.id, parent.name);
     }
     render() {
         const {breadcrumbs, parent, goTo} = this.props;
@@ -23,8 +23,8 @@ export default class Breadcrumbs extends React.Component {
                 rows.push(<ToolbarTitle key={id} text={breadcrumb[1]} onClick={() => {
                     goTo("/files/" + id)
                 }} style={{
-                    color: 'black',
-                    cursor: 'pointer',
+                    color: "black",
+                    cursor: "pointer",
                     paddingRight: 5
                 }} />);
                 rows.push(<ChevronIcon key={id + "-icon"} style={{
@@ -36,24 +36,24 @@ export default class Breadcrumbs extends React.Component {
         if (!_.isEmpty(parent) && parent.id !== 0) {
             rows.push(<ToolbarTitle key={parent.id} text={parent.name} style={{
                 paddingRight: 2,
-                cursor: 'pointer'
+                cursor: "pointer"
             }} onClick={this.handleClick} />);
-            rows.push(<EditIcon key={parent.id + '-edit'} color="rgba(0, 0, 0, 0.4)" style={{
+            rows.push(<EditIcon key={parent.id + "-edit"} color="rgba(0, 0, 0, 0.4)" style={{
                 width: 18,
                 height: 18,
-                cursor: 'pointer'
+                cursor: "pointer"
             }}  onClick={this.handleClick} />);
         }
 
         if (!_.isEmpty(parent) && parent.id === 0) {
             rows.push(<ToolbarTitle key={parent.id} text={parent.name} style={{
-                color: 'black'
+                color: "black"
             }} />);
         }
 
         return (
             <Toolbar id="Breadcrumbs" style={{
-                overflow: 'scroll'
+                overflow: "scroll"
             }}>
                 <ToolbarGroup>
                     {rows}
@@ -64,5 +64,7 @@ export default class Breadcrumbs extends React.Component {
 };
 
 Breadcrumbs.propTypes = {
-    edit: PropTypes.func
+    parent:PropTypes.object,
+    onEdit: PropTypes.func,
+    goTo: PropTypes.func.isRequired
 };

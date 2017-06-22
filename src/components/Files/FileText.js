@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 import CircularProgress from 'material-ui/CircularProgress';
 
@@ -37,4 +38,8 @@ export default class FileText extends React.Component {
             }}>{content}</p>
         );
     }
+};
+
+FileText.propTypes = {
+    content: PropTypes.string
 };

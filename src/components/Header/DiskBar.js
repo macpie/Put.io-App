@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Chip from 'material-ui/Chip';
 
 export default class DiskBar extends React.Component {
@@ -9,10 +10,10 @@ export default class DiskBar extends React.Component {
             return (
                 <div id="DiskBar">
                     <Chip
-                        style={{backgroundColor: 'rgb(255, 64, 129)'}}
-                        labelStyle={{fontWeight: 'bold', color: 'white'}}
+                        style={{backgroundColor: "rgb(255, 64, 129)"}}
+                        labelStyle={{fontWeight: "bold", color: "white"}}
                     >
-                        {Math.round(((100 * disk.used) / disk.size)) + ' %'}
+                        {Math.round(((100 * disk.used) / disk.size)) + " %"}
                     </Chip>
               </div>
             );
@@ -20,4 +21,8 @@ export default class DiskBar extends React.Component {
             return null;
         }
     }
+};
+
+DiskBar.propTypes = {
+    disk: PropTypes.object
 };

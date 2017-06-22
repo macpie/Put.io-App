@@ -13,22 +13,22 @@ export default class Settings extends React.Component {
         const {user, replace, location} = this.props;
 
         this.state = {
-            value: user.access_token || ''
+            value: user.access_token || ""
         };
 
         if (user.access_token && !location.query.stopRedirect) {
-            replace(location.query.redirect || '/events');
+            replace(location.query.redirect || "/events");
         }
     }
     componentWillReceiveProps(nextProps) {
         const {user, replace, location} = nextProps;
 
         this.setState({
-            value: user.access_token || ''
+            value: user.access_token || ""
         });
 
         if (user.access_token && !location.query.stopRedirect) {
-            replace(location.query.redirect || '/events');
+            replace(location.query.redirect || "/events");
         }
     }
     handleChange = (e, value) => {
@@ -41,17 +41,17 @@ export default class Settings extends React.Component {
 
         const {authActions, replace} = this.props;
 
-        Storage.setItem('access_token', this.state.value);
+        Storage.setItem("access_token", this.state.value);
         authActions.fetchToken();
 
-        replace('/events');
+        replace("/events");
     }
     render() {
         return (
             <Col id="Settings" xs={12}>
                 <Paper style={{
                         padding: 5,
-                        textAlign: 'center'
+                        textAlign: "center"
                     }} zDepth={1}>
                     <p>
                         Clink the link below to get your access token.
@@ -66,7 +66,7 @@ export default class Settings extends React.Component {
                     </p>
                     <TextField
                         inputStyle={{
-                            textAlign: 'center'
+                            textAlign: "center"
                         }}
                         floatingLabelText="Access Token"
                         name="access_token"

@@ -7,7 +7,7 @@ import TextField from 'material-ui/TextField';
 export default class CreateFolder extends React.Component {
     state = {
         open: false,
-        value: ''
+        value: ""
     }
     componentWillReceiveProps(nextProps) {
         this.setState({
@@ -19,13 +19,13 @@ export default class CreateFolder extends React.Component {
     }
     handleClose = () => {
         this.setState({
-            value: '',
+            value: "",
             open: false
         });
-        this.props.cancel();
+        this.props.onCancel();
     }
     handleCreate = () => {
-        this.props.create(this.state.value);
+        this.props.onCreate(this.state.value);
         this.handleClose();
     }
     handleChange = (e, value) => {
@@ -48,9 +48,9 @@ export default class CreateFolder extends React.Component {
             />,
         ];
 
-        let title = 'Create folder';
+        let title = "Create folder";
 
-        if(parent && parent.name) title += ' in ' + parent.name;
+        if(parent && parent.name) title += " in " + parent.name;
 
         return (
             <Dialog
@@ -73,6 +73,8 @@ export default class CreateFolder extends React.Component {
 };
 
 CreateFolder.propTypes = {
+    open: PropTypes.bool,
     parent: PropTypes.object,
-    create: PropTypes.func.isRequired
+    onCreate: PropTypes.func.isRequired,
+    onCancel: PropTypes.func
 };

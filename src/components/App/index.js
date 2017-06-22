@@ -16,8 +16,8 @@ export default class App extends React.Component {
                 title: "Error",
                 message: Utils.cutString(error.error_message, 50),
                 key: error.id,
-                action: 'Dismiss',
-                dismissAfter: 5000,
+                action: "Dismiss",
+                dismissAfter: 3000,
                 onClick: this.handleClick
             };
         });
@@ -54,7 +54,7 @@ export default class App extends React.Component {
                     paddingLeft: 5,
                     paddingRight: 5
                 }}>
-                    <Menu open={menu} toggle={menuActions.toggle} push={routeActions.push} />
+                    <Menu open={menu} onToggle={menuActions.toggle} onPush={routeActions.push} />
                     <Row style={{
                         marginBottom: 20
                     }}>

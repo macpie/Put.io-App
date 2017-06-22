@@ -57,7 +57,7 @@ export default class File extends React.Component {
                 case "TEXT":
                     return <FileText file={parent} filesActions={filesActions} content={stream} />;
                 case "VIDEO":
-                    return <FileVideo file={parent} convert={this.handleConvert} mp4={mp4} />
+                    return <FileVideo file={parent} onConvert={this.handleConvert} mp4={mp4} />
                 default:
                     return null;
             }
@@ -66,10 +66,10 @@ export default class File extends React.Component {
         return (
             <Col id="File" xs={12}>
                 <Paper zDepth={1}>
-                    <Breadcrumbs breadcrumbs={breadcrumbs} parent={parent} goTo={goTo}  edit={this.handleEdit} />
+                    <Breadcrumbs breadcrumbs={breadcrumbs} parent={parent} goTo={goTo}  onEdit={this.handleEdit} />
                     {content()}
                 </Paper>
-                <RenameFile open={!_.isEmpty(renameFile)} name={renameFile.name || ''} rename={this.handleRenameFile} cancel={this.handleReset} />
+                <RenameFile open={!_.isEmpty(renameFile)} name={renameFile.name || ""} onRename={this.handleRenameFile} onCancel={this.handleReset} />
             </Col>
         );
     }

@@ -7,13 +7,13 @@ import * as _ from 'lodash';
 
 export default class FilesTable extends React.Component {
     render() {
-        const {parent, files, rowClick, selected, select, selectAll, menuSelect} = this.props;
+        const {parent, files, onRowClick, selected, onSelect, onSelectAll, onMenuSelect} = this.props;
 
         const content = () => {
             if(_.isEmpty(files)) {
                 return (
                     <TableRow>
-                        <TableRowColumn style={{textAlign: 'center'}}>Nothing</TableRowColumn>
+                        <TableRowColumn style={{textAlign: "center"}}>Nothing</TableRowColumn>
                     </TableRow>
                 );
             } else {
@@ -23,8 +23,8 @@ export default class FilesTable extends React.Component {
                     const checked = (_.indexOf(selected, file.id) === -1) ? false : true;
 
                     rows.push(<FilesRow key={file.id} file={file} onClick={(e) => {
-                        rowClick(file, e)
-                    }} checked={checked} onSelect={select} />);
+                        onRowClick(file, e)
+                    }} checked={checked} onSelect={onSelect} />);
                 });
 
                 return rows;
@@ -34,7 +34,7 @@ export default class FilesTable extends React.Component {
         return (
             <Table multiSelectable={false} selectable={false}>
                 <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-                    <FilesTableHeader selectAll={selectAll} menuSelect={menuSelect} />
+                    <FilesTableHeader onSelectAll={onSelectAll} onMenuSelect={onMenuSelect} />
                 </TableHeader >
                 <TableBody key={parent.id} showRowHover={true} displayRowCheckbox={false}>
                     {content()}
@@ -46,8 +46,11 @@ export default class FilesTable extends React.Component {
 };
 
 FilesTable.propTypes = {
-    parent: PropTypes.object,
     files: PropTypes.array,
-    rowClick: PropTypes.func,
-    menuSelect: PropTypes.func
+    parent: PropTypes.object,
+    selected: PropTypes.array,
+    onSelectAll: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
+    onRowClick: PropTypes.func.isRequired,
+    onMenuSelect: PropTypes.func.isRequired
 };

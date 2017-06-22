@@ -8,7 +8,7 @@ export default class downloadLink extends React.Component {
     render() {
         const {file} = this.props;
 
-        if (file.file_type === 'FOLDER') {
+        if (file.file_type === "FOLDER") {
             return null;
         } else {
             return (

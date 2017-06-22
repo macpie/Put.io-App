@@ -19,18 +19,16 @@ export default class ZipDialog extends React.Component {
         this.setState({open});
     }
     handleClose = () => {
-        const {closing} = this.props;
+        const {onClosing} = this.props;
 
         this.setState({
              open: false
         });
 
-        closing();
+        onClosing();
     }
     render() {
         const {zip} = this.props;
-
-
 
         const actions = [
             <FlatButton
@@ -38,7 +36,7 @@ export default class ZipDialog extends React.Component {
                 onTouchTap={this.handleClose}
             />,
             <FlatButton
-                href={(typeof zip.url === 'string') ? zip.url : ''}
+                href={(typeof zip.url === "string") ? zip.url : ""}
                 onTouchTap={this.handleClose}
                 label="Download"
                 primary={true}
@@ -59,5 +57,5 @@ export default class ZipDialog extends React.Component {
 ZipDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     zip: PropTypes.object.isRequired,
-    closing: PropTypes.func.isRequired
+    onClosing: PropTypes.func.isRequired
 };
