@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import * as _ from 'lodash';
 import {List, ListItem} from 'material-ui/List';
 import DateRangeIcon from 'material-ui/svg-icons/action/date-range';
