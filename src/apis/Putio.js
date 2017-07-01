@@ -1,6 +1,7 @@
 import request from 'superagent';
 import Promise from 'promise';
 import * as _ from 'lodash';
+import async from 'async';
 import * as Storage from '../utils/Storage';
 import {
     CLIENT_ID,
@@ -164,9 +165,6 @@ export const filesList = (id = 0) => {
                 mp4_stream_url: true,
                 mp4_stream_url_parent: true
             })
-            .send({
-                transfer_ids: id
-            })
             .end((err, res) => {
                 if (err) {
                     reject(res.body, err);
@@ -174,6 +172,63 @@ export const filesList = (id = 0) => {
                     resolve(res.body || {});
                 }
             });
+    });
+};
+
+export const filesTree = () => {
+    const req = (id = 0, callback) => {
+        request
+            .get(PUTIO_URL + "/files/list")
+            .set(HEADERS)
+            .query({
+                oauth_token: Storage.getItem("access_token"),
+                parent_id: id
+            })
+            .end((err, res) => {
+                callback(err, res.body || {});
+            });
+    };
+
+    const pick = (obj) => {
+        let o = _.pick(obj, ["name", "id", "file_type", "folder_type", "parent_id", "size"]);
+        o.children = [];
+        return o;
+    };
+
+    const fetchTree = (node, callback) => {
+        req(node.id, (err, body) => {
+            const files = body.files || [],
+                parent = body.parent || {};
+
+            node = pick(parent);
+
+            if(files.length > 0) {
+                async.map(files, (file, cb) => {
+                    let n = pick(file);
+
+                    if (file.folder_type === "SHARED_ROOT") {
+                        cb(null, n);
+                    } else {
+                        fetchTree(n, cb);
+                    }
+                }, (err1, children) => {
+                    node.children = children
+                    callback(err1, node)
+                });
+            } else {
+                callback(null, node)
+            }
+        });
+    };
+
+    return new Promise((resolve, reject) => {
+        fetchTree({id: 0}, (err, data) => {
+            if(err) {
+                reject(data, err);
+            } else {
+                resolve(data);
+            }
+        });
     });
 };
 
@@ -228,6 +283,28 @@ export const fileRename = (file_id, name) => {
             .send({
                 file_id,
                 name
+            })
+            .end((err, res) => {
+                if (err) {
+                    reject(res.body, err);
+                } else {
+                    resolve(res.body || {});
+                }
+            });
+    });
+};
+
+export const filesMove = (file_ids, parent_id) => {
+    return new Promise((resolve, reject) => {
+        request
+            .post(PUTIO_URL + "/files/move")
+            .set(HEADERS)
+            .query({
+                oauth_token: Storage.getItem("access_token")
+            })
+            .send({
+                parent_id,
+                file_ids: (_.isArray(file_ids)) ? _.join(file_ids, ",") : file_ids
             })
             .end((err, res) => {
                 if (err) {

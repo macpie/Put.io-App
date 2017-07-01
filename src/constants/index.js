@@ -19,6 +19,9 @@ export const ZIP_CREATE = "ZIP_CREATE";
 export const ZIP_GET = "ZIP_GET";
 export const ZIP_CLEAR = "ZIP_CLEAR";
 export const ERROR_DISMISS = "ERROR_DISMISS";
+export const FILES_TREE_GET = "FILES_TREE_GET";
+export const FILES_MOVE = "FILES_MOVE";
+
 
 // Colors
 export const COLORS = {

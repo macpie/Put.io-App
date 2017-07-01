@@ -8,7 +8,9 @@ import {
     CLEAR_STREAM,
     FILE_MP4,
     FILE_MP4_STATUS,
-    FILE_MP4_STATUS_RESET
+    FILE_MP4_STATUS_RESET,
+    FILES_TREE_GET,
+    FILES_MOVE
 } from '../constants';
 
 export const get = (id) => {
@@ -55,6 +57,18 @@ export const rename = (id, name) => {
     };
 };
 
+export const move = (files_ids, parent_id) => {
+    return dispatch => {
+        return dispatch({
+                type: FILES_MOVE,
+                payload: PutioApis.filesMove(files_ids, parent_id)
+            })
+            .then(() => {
+                dispatch(get(parent_id));
+            });
+    };
+};
+
 export const remove = (ids) => {
     return {
         type: FILES_DELETE,
@@ -79,5 +93,12 @@ export const mp4Status = (id) => {
 export const mp4StatusReset = () => {
     return {
         type: FILE_MP4_STATUS_RESET
+    };
+};
+
+export const tree = () => {
+    return {
+        type: FILES_TREE_GET,
+        payload: PutioApis.filesTree()
     };
 };

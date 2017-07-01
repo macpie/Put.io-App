@@ -7,10 +7,12 @@ import FilesTable from './FilesTable';
 import CreateFolder from '../CreateFolder';
 import RenameFile from '../RenameFile';
 import ZipDialog from './ZipDialog';
+import FileTree from '../FileTree';
 
 export default class Files extends React.Component {
     state = {
         createFolder: false,
+        move: false,
         renameFile: {},
         selected: []
     }
@@ -69,6 +71,9 @@ export default class Files extends React.Component {
             case "zip":
                 zipActions.create(selected);
                 break;
+            case "move":
+                if(!_.isEmpty(selected)) this.setState({move: true});
+                break;
             default:
                 console.log(value);
         }
@@ -94,14 +99,36 @@ export default class Files extends React.Component {
 
         zipActions.clear();
     }
+    handleMove = (file) => {
+        const {filesActions} = this.props;
+        const {selected} = this.state;
+
+        filesActions.move(selected, file.id);
+
+        this.setState({
+            selected: [],
+            move: false
+        });
+    }
     render() {
-        const {files, breadcrumbs, parent, goTo, zip} = this.props;
-        const {createFolder, renameFile, selected} = this.state;
+        const {files, breadcrumbs, parent, goTo, zip, filesActions, tree} = this.props;
+        const {createFolder, renameFile, selected, move} = this.state;
 
         return (
             <Col id="Files" xs={12}>
+                <FileTree
+                    filesActions={filesActions}
+                    tree={tree}
+                    open={move}
+                    onMove={this.handleMove}
+                />
                 <Paper zDepth={1}>
-                    <Breadcrumbs breadcrumbs={breadcrumbs} parent={parent} goTo={goTo} onEdit={this.handleEdit} />
+                    <Breadcrumbs
+                        breadcrumbs={breadcrumbs}
+                        parent={parent}
+                        goTo={goTo}
+                        onEdit={this.handleEdit}
+                    />
                     <FilesTable
                         files={files}
                         parent={parent}
@@ -112,8 +139,18 @@ export default class Files extends React.Component {
                         onMenuSelect={this.handleMenuSelect}
                     />
                 </Paper>
-                <CreateFolder open={createFolder} parent={parent} onCreate={this.handleCreateFolder} onCancel={this.handleReset} />
-                <RenameFile open={!_.isEmpty(renameFile)} name={renameFile.name || ""} onRename={this.handleRenameFile} onCancel={this.handleReset} />
+                <CreateFolder
+                    open={createFolder}
+                    parent={parent}
+                    onCreate={this.handleCreateFolder}
+                    onCancel={this.handleReset}
+                />
+                <RenameFile
+                    open={!_.isEmpty(renameFile)}
+                    name={renameFile.name || ""}
+                    onRename={this.handleRenameFile}
+                    onCancel={this.handleReset}
+                />
                 <ZipDialog
                     zip={zip}
                     open={(zip.url) ? true : false}

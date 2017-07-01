@@ -38,12 +38,12 @@ export default class CreateFolder extends React.Component {
             <FlatButton
                 label="Cancel"
                 primary={true}
+                keyboardFocused={true}
                 onTouchTap={this.handleClose}
             />,
             <FlatButton
                 label="Create Folder"
                 primary={true}
-                keyboardFocused={true}
                 onTouchTap={this.handleCreate}
             />,
         ];
