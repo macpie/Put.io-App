@@ -104,6 +104,7 @@ export default class Files extends React.Component {
         const {selected} = this.state;
 
         filesActions.move(selected, file.id);
+        filesActions.treeReset();
 
         this.setState({
             selected: [],

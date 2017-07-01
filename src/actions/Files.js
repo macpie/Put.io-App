@@ -10,6 +10,7 @@ import {
     FILE_MP4_STATUS,
     FILE_MP4_STATUS_RESET,
     FILES_TREE_GET,
+    FILES_TREE_RESET,
     FILES_MOVE
 } from '../constants';
 
@@ -100,5 +101,12 @@ export const tree = () => {
     return {
         type: FILES_TREE_GET,
         payload: PutioApis.filesTree()
+    };
+};
+
+
+export const treeReset = () => {
+    return {
+        type: FILES_TREE_RESET
     };
 };
