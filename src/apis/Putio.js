@@ -1,7 +1,6 @@
 import request from 'superagent';
 import Promise from 'promise';
 import * as _ from 'lodash';
-import async from 'async';
 import * as Storage from '../utils/Storage';
 import {
     CLIENT_ID,
