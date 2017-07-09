@@ -34,8 +34,12 @@ export default class FileTree extends React.Component {
         }
     }
     handleClose = () => {
+        const {onCancel} = this.props;
+
+        onCancel();
+
         this.setState({
-            open: false
+            selected: {}
         });
     }
     handleMove = () => {
@@ -101,9 +105,6 @@ export default class FileTree extends React.Component {
                 autoScrollBodyContent={true}
                 open={this.state.open}
                 onRequestClose={this.handleClose}
-                bodyStyle={{
-                    minHeight: 499
-                }}
             >
                 <List>
                     {(_.isEmpty(tree)) ?
@@ -126,6 +127,7 @@ FileTree.propTypes = {
     tree: PropTypes.object,
     open: PropTypes.bool,
     onMove: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired,
     filesActions: PropTypes.shape({
         tree: PropTypes.func.isRequired
     })

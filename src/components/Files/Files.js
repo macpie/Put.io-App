@@ -104,10 +104,14 @@ export default class Files extends React.Component {
         const {selected} = this.state;
 
         filesActions.move(selected, file.id);
+        this.handleCancelMove();
+    }
+    handleCancelMove = () => {
+        const {filesActions} = this.props;
+
         filesActions.treeReset();
 
         this.setState({
-            selected: [],
             move: false
         });
     }
@@ -122,6 +126,7 @@ export default class Files extends React.Component {
                     tree={tree}
                     open={move}
                     onMove={this.handleMove}
+                    onCancel={this.handleCancelMove}
                 />
                 <Paper zDepth={1}>
                     <Breadcrumbs
