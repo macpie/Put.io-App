@@ -97,10 +97,10 @@ export const mp4StatusReset = () => {
     };
 };
 
-export const tree = () => {
+export const tree = (id, path) => {
     return {
         type: FILES_TREE_GET,
-        payload: PutioApis.filesTree()
+        payload: PutioApis.filesTree(id, path)
     };
 };
 

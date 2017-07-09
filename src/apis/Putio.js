@@ -175,8 +175,8 @@ export const filesList = (id = 0) => {
     });
 };
 
-export const filesTree = () => {
-    const req = (id = 0, callback) => {
+export const filesTree = (id = 0, path = [0]) => {
+    return new Promise((resolve, reject) => {
         request
             .get(PUTIO_URL + "/files/list")
             .set(HEADERS)
@@ -185,50 +185,16 @@ export const filesTree = () => {
                 parent_id: id
             })
             .end((err, res) => {
-                callback(err, res.body || {});
+                if (err) {
+                    reject(res.body, err);
+                } else {
+                    let data = res.body || {};
+
+                    data.path = path;
+
+                    resolve(data);
+                }
             });
-    };
-
-    const pick = (obj) => {
-        let o = _.pick(obj, ["name", "id", "file_type", "folder_type", "parent_id", "size"]);
-        o.children = [];
-        return o;
-    };
-
-    const fetchTree = (node, callback) => {
-        req(node.id, (err, body) => {
-            const files = body.files || [],
-                parent = body.parent || {};
-
-            node = pick(parent);
-
-            if(files.length > 0) {
-                async.map(files, (file, cb) => {
-                    let n = pick(file);
-
-                    if (file.folder_type === "SHARED_ROOT") {
-                        cb(null, n);
-                    } else {
-                        fetchTree(n, cb);
-                    }
-                }, (err1, children) => {
-                    node.children = children
-                    callback(err1, node)
-                });
-            } else {
-                callback(null, node)
-            }
-        });
-    };
-
-    return new Promise((resolve, reject) => {
-        fetchTree({id: 0}, (err, data) => {
-            if(err) {
-                reject(data, err);
-            } else {
-                resolve(data);
-            }
-        });
     });
 };
 

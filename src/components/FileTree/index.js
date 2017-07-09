@@ -24,7 +24,13 @@ export default class FileTree extends React.Component {
     }
     handleChange = (e, selected) => {
         if(selected.file_type === "FOLDER") {
-            this.setState({selected});
+            const {filesActions} = this.props;
+
+            filesActions.tree(selected.id, selected.path);
+
+            this.setState({
+                selected
+            });
         }
     }
     handleClose = () => {
@@ -43,11 +49,21 @@ export default class FileTree extends React.Component {
         const {tree} = this.props;
         const {selected} = this.state;
 
-        const createListItem = (node, initiallyOpen = false) => {
+        const createListItem = (node, path = "") => {
             let children = [];
 
-            _.forEach(node.children, function(child) {
-                children.push(createListItem(child));
+            node.path = path;
+
+            _.forEach(node.children, function(child, index) {
+                let childPath;
+
+                if(_.isEmpty(path)) {
+                    childPath = "children[" + index + "]";
+                } else {
+                    childPath = path + ".children[" + index + "]";
+                }
+
+                children.push(createListItem(child, childPath));
             });
 
             return (
@@ -55,7 +71,7 @@ export default class FileTree extends React.Component {
                     key={node.id}
                     primaryText={node.name}
                     leftIcon={(node.file_type === "FOLDER") ? <FolderIcon /> : <FileIcon /> }
-                    initiallyOpen={initiallyOpen}
+                    initiallyOpen={true}
                     primaryTogglesNestedList={false}
                     onClick={(e) => {this.handleChange(e, node)}}
                     nestedItems={children}
@@ -98,7 +114,7 @@ export default class FileTree extends React.Component {
                                 margin: "50px auto",
                                 display: "block"
                             }}
-                        /> : createListItem(tree, true)}
+                        /> : createListItem(tree)}
                 </List>
             </Dialog>
 
