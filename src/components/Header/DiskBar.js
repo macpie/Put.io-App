@@ -15,14 +15,17 @@ export default class DiskBar extends React.Component {
                     >
                         {Math.round(((100 * disk.used) / disk.size)) + " %"}
                     </Chip>
-              </div>
+                </div>
             );
         } else {
-            return null;
+            return <div id="DiskBar" />;
         }
     }
 };
 
 DiskBar.propTypes = {
-    disk: PropTypes.object
+    disk: PropTypes.shape({
+        used: PropTypes.number,
+        size: PropTypes.number
+    })
 };
