@@ -15,7 +15,7 @@ export const fetchToken = () => {
     return {
         type: USER_AUTHENTICATE,
         payload: {
-            access_token: Storage.getItem('access_token')
+            access_token: Storage.getItem("access_token")
         }
     };
 };

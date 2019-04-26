@@ -7,10 +7,12 @@ import FilesTable from './FilesTable';
 import CreateFolder from '../CreateFolder';
 import RenameFile from '../RenameFile';
 import ZipDialog from './ZipDialog';
+import FileTree from '../FileTree';
 
 export default class Files extends React.Component {
     state = {
         createFolder: false,
+        move: false,
         renameFile: {},
         selected: []
     }
@@ -25,7 +27,7 @@ export default class Files extends React.Component {
 
         if(checked) {
             this.setState({
-                selected: _.map(files, 'id')
+                selected: _.map(files, "id")
             });
         } else {
             this.setState({
@@ -60,14 +62,17 @@ export default class Files extends React.Component {
         const {selected} = this.state;
 
         switch(value) {
-            case 'new_folder':
+            case "new_folder":
                 this.setState({createFolder: true});
                 break;
-            case 'delete':
+            case "delete":
                 filesActions.remove(selected);
                 break;
-            case 'zip':
+            case "zip":
                 zipActions.create(selected);
+                break;
+            case "move":
+                if(!_.isEmpty(selected)) this.setState({move: true});
                 break;
             default:
                 console.log(value);
@@ -94,31 +99,68 @@ export default class Files extends React.Component {
 
         zipActions.clear();
     }
+    handleMove = (file) => {
+        const {filesActions} = this.props;
+        const {selected} = this.state;
+
+        filesActions.move(selected, file.id);
+        this.handleCancelMove();
+    }
+    handleCancelMove = () => {
+        const {filesActions} = this.props;
+
+        filesActions.treeReset();
+
+        this.setState({
+            move: false
+        });
+    }
     render() {
-        const {files, breadcrumbs, parent, goTo, zip} = this.props;
-        const {createFolder, renameFile, selected} = this.state;
+        const {files, breadcrumbs, parent, goTo, zip, filesActions, tree} = this.props;
+        const {createFolder, renameFile, selected, move} = this.state;
 
         return (
             <Col id="Files" xs={12}>
+                <FileTree
+                    filesActions={filesActions}
+                    tree={tree}
+                    open={move}
+                    onMove={this.handleMove}
+                    onCancel={this.handleCancelMove}
+                />
                 <Paper zDepth={1}>
-                    <Breadcrumbs breadcrumbs={breadcrumbs} parent={parent} goTo={goTo} edit={this.handleEdit} />
+                    <Breadcrumbs
+                        breadcrumbs={breadcrumbs}
+                        parent={parent}
+                        goTo={goTo}
+                        onEdit={this.handleEdit}
+                    />
                     <FilesTable
                         files={files}
                         parent={parent}
-                        selectAll={this.handleSelectAll}
-                        select={this.handleSelect}
                         selected={selected}
-                        rowClick={this.handleRowClick}
-                        menuSelect={this.handleMenuSelect}
-                        createFolder={this.handleFolderCreate}
+                        onSelectAll={this.handleSelectAll}
+                        onSelect={this.handleSelect}
+                        onRowClick={this.handleRowClick}
+                        onMenuSelect={this.handleMenuSelect}
                     />
                 </Paper>
-                <CreateFolder open={createFolder} parent={parent} create={this.handleCreateFolder} cancel={this.handleReset} />
-                <RenameFile open={!_.isEmpty(renameFile)} name={renameFile.name || ''} rename={this.handleRenameFile} cancel={this.handleReset} />
+                <CreateFolder
+                    open={createFolder}
+                    parent={parent}
+                    onCreate={this.handleCreateFolder}
+                    onCancel={this.handleReset}
+                />
+                <RenameFile
+                    open={!_.isEmpty(renameFile)}
+                    name={renameFile.name || ""}
+                    onRename={this.handleRenameFile}
+                    onCancel={this.handleReset}
+                />
                 <ZipDialog
                     zip={zip}
                     open={(zip.url) ? true : false}
-                    closing={this.handleZipClosing}
+                    onClosing={this.handleZipClosing}
                 />
             </Col>
         );

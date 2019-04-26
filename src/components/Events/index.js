@@ -24,9 +24,9 @@ export default class Events extends React.Component {
         let todayEvents = [],
             weekEvents = [],
             monthEvents = [],
-            day = moment().subtract(1, 'days'),
-            week = moment().subtract(1, 'weeks'),
-            month = moment().subtract(1, 'months');
+            day = moment().subtract(1, "days"),
+            week = moment().subtract(1, "weeks"),
+            month = moment().subtract(1, "months");
 
         this
             .props
@@ -34,7 +34,7 @@ export default class Events extends React.Component {
             .forEach((e) => {
                 let date = moment(e.created_at);
 
-                if (e.type === 'transfer_completed') {
+                if (e.type === "transfer_completed") {
                     if (date.isAfter(day)) {
                         todayEvents.push(e);
                     }
@@ -51,9 +51,9 @@ export default class Events extends React.Component {
             <Col id="Events" xs={12}>
                 <Paper zDepth={1}>
                     <Tabs>
-                        {EventTab('Today', todayEvents, this.handleSelect)}
-                        {EventTab('Last Week', weekEvents, this.handleSelect)}
-                        {EventTab('Last Month', monthEvents, this.handleSelect)}
+                        {EventTab("Today", todayEvents, this.handleSelect)}
+                        {EventTab("Last Week", weekEvents, this.handleSelect)}
+                        {EventTab("Last Month", monthEvents, this.handleSelect)}
                     </Tabs>
                 </Paper>
             </Col>

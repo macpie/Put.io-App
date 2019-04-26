@@ -14,14 +14,14 @@ import {
 
 export default class TransferItem extends React.Component {
     render() {
-        const {transfer, cancel, select} = this.props;
+        const {transfer, onCancel, onSelect} = this.props;
 
         let leftIcon = (<DownlaodIncon color={COLORS.ORANGE} />),
-            righIcon = (<IconButton><CancelIncon color={COLORS.RED} onClick={() => {cancel(transfer.id)}} /></IconButton>);
+            righIcon = (<IconButton><CancelIncon color={COLORS.RED} onClick={() => {onCancel(transfer.id)}} /></IconButton>);
 
-        if(transfer.status === 'COMPLETED') {
+        if(transfer.status === "COMPLETED") {
             leftIcon = (<CheckIncon color={COLORS.GREEN} />);
-            righIcon = (<IconButton onClick={(e) => {select(transfer, e)}}> <FwIncon /> </IconButton>);
+            righIcon = (<IconButton onClick={(e) => {onSelect(transfer, e)}}> <FwIncon /> </IconButton>);
         }
 
         return (
@@ -29,9 +29,9 @@ export default class TransferItem extends React.Component {
                 key={transfer.id}
                 primaryText={
                     <div style={{
-                        textOverflow: 'ellipsis',
-                        overflow: 'hidden',
-                        whiteSpace: 'nowrap'}}
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        whiteSpace: "nowrap"}}
                     >
                         {transfer.name}
                     </div>
@@ -58,6 +58,6 @@ export default class TransferItem extends React.Component {
 
 TransferItem.propTypes = {
     transfer: PropTypes.object.isRequired,
-    cancel: PropTypes.func.isRequired,
-    select: PropTypes.func
+    onCancel: PropTypes.func.isRequired,
+    onSelect: PropTypes.func
 };

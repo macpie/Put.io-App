@@ -16,6 +16,7 @@ import zip from './Zip';
 import stream from './Stream';
 import errors from './Errors';
 import mp4 from './Mp4';
+import tree from './Tree';
 
 export default combineReducers({
     routing: routerReducer,
@@ -30,5 +31,6 @@ export default combineReducers({
     zip,
     stream,
     errors,
-    mp4
+    mp4,
+    tree
 });

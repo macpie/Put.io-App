@@ -52,7 +52,7 @@ export default class Transfers extends React.Component {
             return (
                 <Col id="Transfers" xs={12}>
                     <h2 style={{
-                        textAlign: 'center'
+                        textAlign: "center"
                     }}>No Transfers</h2>
                 </Col>
             );
@@ -60,7 +60,7 @@ export default class Transfers extends React.Component {
             let listItems = [];
 
             transfers.forEach((transfer) => {
-                listItems.push(<TransferItem key={transfer.id} transfer={transfer} cancel={this.handleCancel} select={this.handleSelect}/>);
+                listItems.push(<TransferItem key={transfer.id} transfer={transfer} onCancel={this.handleCancel} onSelect={this.handleSelect}/>);
             });
 
             return (
@@ -72,7 +72,7 @@ export default class Transfers extends React.Component {
                     </Row>
                     <Row>
                         <Paper style={{
-                            width: '100%'
+                            width: "100%"
                         }} zDepth={1}>
                             <List>
                                 {listItems}

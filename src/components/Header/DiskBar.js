@@ -10,10 +10,10 @@ export default class DiskBar extends React.Component {
             return (
                 <div id="DiskBar">
                     <Chip
-                        style={{backgroundColor: 'rgb(255, 64, 129)'}}
-                        labelStyle={{fontWeight: 'bold', color: 'white'}}
+                        style={{backgroundColor: "rgb(255, 64, 129)"}}
+                        labelStyle={{fontWeight: "bold", color: "white"}}
                     >
-                        {Math.round(((100 * disk.used) / disk.size)) + ' %'}
+                        {Math.round(((100 * disk.used) / disk.size)) + " %"}
                     </Chip>
                 </div>
             );

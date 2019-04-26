@@ -10,9 +10,9 @@ import * as utility from '../../utils';
 import DownloadLink from './DownloadLink';
 
 const fileType = (file) => {
-    if (file.file_type === 'FOLDER') {
+    if (file.file_type === "FOLDER") {
         return (<FolderIcon />);
-    } else if (file.file_type === 'VIDEO') {
+    } else if (file.file_type === "VIDEO") {
         return (<VideoIcon />);
     } else {
         return (<FileIcon />);
@@ -57,18 +57,18 @@ export default class FilesRow extends React.Component {
                 </TableRowColumn>
                 <TableRowColumn style={{
                     width: 24,
-                    cursor: 'pointer'
+                    cursor: "pointer"
                 }}>
                     {fileType(file)}
                 </TableRowColumn>
                 <TableRowColumn style={{
-                    cursor: 'pointer'
+                    cursor: "pointer"
                 }}>
                     {file.name}
                 </TableRowColumn>
                 <TableRowColumn style={{
                     width: 24,
-                    cursor: 'pointer'
+                    cursor: "pointer"
                 }}>
                     <DownloadLink file={file} />
                 </TableRowColumn>

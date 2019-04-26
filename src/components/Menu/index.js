@@ -15,14 +15,14 @@ export default class Menu extends React.Component {
                 docked={false}
                 width={200}
                 open={this.props.open}
-                onRequestChange={this.props.menuToggle}
+                onRequestChange={this.props.onToggle}
             >
                 <AppBar title="Menu" showMenuIconButton={false} />
                 <MenuItem
                     leftIcon={<EventIcon />}
                     onClick={() => {
-                        this.props.push('/events');
-                        this.props.menuToggle();
+                        this.props.onPush("/events");
+                        this.props.onToggle();
                     }}
                 >
                     Events
@@ -30,8 +30,8 @@ export default class Menu extends React.Component {
                 <MenuItem
                     leftIcon={<TransferIcon />}
                     onClick={() => {
-                        this.props.push('/transfers');
-                        this.props.menuToggle();
+                        this.props.onPush("/transfers");
+                        this.props.onToggle();
                     }}
                 >
                     Transfers
@@ -39,8 +39,8 @@ export default class Menu extends React.Component {
                 <MenuItem
                     leftIcon={<FolderIcon />}
                     onClick={() => {
-                        this.props.push('/files');
-                        this.props.menuToggle();
+                        this.props.onPush("/files");
+                        this.props.onToggle();
                     }}
                 >
                     Files
@@ -48,8 +48,8 @@ export default class Menu extends React.Component {
                 <MenuItem
                     leftIcon={<SettingsIcon />}
                     onClick={() => {
-                        this.props.push('/settings?stopRedirect=1');
-                        this.props.menuToggle();
+                        this.props.onPush("/settings?stopRedirect=1");
+                        this.props.onToggle();
                     }}
                 >
                     Settings
@@ -61,6 +61,6 @@ export default class Menu extends React.Component {
 
 Menu.propTypes = {
     open: PropTypes.bool.isRequired,
-    menuToggle: PropTypes.func.isRequired,
-    push: PropTypes.func.isRequired
+    onToggle: PropTypes.func.isRequired,
+    onPush: PropTypes.func.isRequired
 };

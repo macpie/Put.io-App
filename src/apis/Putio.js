@@ -9,40 +9,40 @@ import {
 } from '../config.json';
 
 const HEADERS = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Accept': 'application/json'
+    "Content-Type": "application/x-www-form-urlencoded",
+    "Accept": "application/json"
 };
 
 export const downloadLink = (id) => {
-    return PUTIO_URL + '/files/' + id + '/download?oauth_token=' + Storage.getItem('access_token');
+    return PUTIO_URL + "/files/" + id + "/download?oauth_token=" + Storage.getItem("access_token");
 };
 
 export const authenticateLink = () => {
-    return PUTIO_URL + '/oauth2/authenticate?client_id=' + CLIENT_ID + '&response_type=token&redirect_uri=' + CODE_URL;
+    return PUTIO_URL + "/oauth2/authenticate?client_id=" + CLIENT_ID + "&response_type=token&redirect_uri=" + CODE_URL;
 };
 
 export const authenticate = () => {
     return new Promise((resolve, reject) => {
-        if (Storage.getItem('access_token')) {
+        if (Storage.getItem("access_token")) {
             resolve({
-                access_token: Storage.getItem('access_token')
+                access_token: Storage.getItem("access_token")
             });
         } else {
             request
-                .get(PUTIO_URL + '/oauth2/authenticate')
-                .query('client_id=' + CLIENT_ID + '&response_type=token&redirect_uri=' + CODE_URL)
+                .get(PUTIO_URL + "/oauth2/authenticate")
+                .query("client_id=" + CLIENT_ID + "&response_type=token&redirect_uri=" + CODE_URL)
                 .set(HEADERS)
                 .end((err, res) => {
                     if (err) {
                         reject(res.body, err);
                     } else {
-                        if (res.type === 'text/html') {
+                        if (res.type === "text/html") {
                             reject({
                                 id: "authenticate",
                                 error_message: "Authentication Failed"
                             });
                         } else {
-                            Storage.setItem('access_token', res.body.access_token);
+                            Storage.setItem("access_token", res.body.access_token);
                             resolve(res.body);
                         }
 
@@ -55,10 +55,10 @@ export const authenticate = () => {
 export const eventsList = () => {
     return new Promise((resolve, reject) => {
         request
-            .get(PUTIO_URL + '/events/list')
+            .get(PUTIO_URL + "/events/list")
             .set(HEADERS)
             .query({
-                oauth_token: Storage.getItem('access_token'),
+                oauth_token: Storage.getItem("access_token"),
             })
             .end((err, res) => {
                 if (err) {
@@ -73,10 +73,10 @@ export const eventsList = () => {
 export const accountInfo = () => {
     return new Promise((resolve, reject) => {
         request
-            .get(PUTIO_URL + '/account/info')
+            .get(PUTIO_URL + "/account/info")
             .set(HEADERS)
             .query({
-                oauth_token: Storage.getItem('access_token'),
+                oauth_token: Storage.getItem("access_token"),
             })
             .end((err, res) => {
                 if (err) {
@@ -91,10 +91,10 @@ export const accountInfo = () => {
 export const transfersList = () => {
     return new Promise((resolve, reject) => {
         request
-            .get(PUTIO_URL + '/transfers/list')
+            .get(PUTIO_URL + "/transfers/list")
             .set(HEADERS)
             .query({
-                oauth_token: Storage.getItem('access_token'),
+                oauth_token: Storage.getItem("access_token"),
             })
             .end((err, res) => {
                 if (err) {
@@ -109,10 +109,10 @@ export const transfersList = () => {
 export const transfersClean = () => {
     return new Promise((resolve, reject) => {
         request
-            .post(PUTIO_URL + '/transfers/clean')
+            .post(PUTIO_URL + "/transfers/clean")
             .set(HEADERS)
             .query({
-                oauth_token: Storage.getItem('access_token'),
+                oauth_token: Storage.getItem("access_token"),
             })
             .end((err, res) => {
                 if (err) {
@@ -127,10 +127,10 @@ export const transfersClean = () => {
 export const transferCancel = (id) => {
     return new Promise((resolve, reject) => {
         request
-            .post(PUTIO_URL + '/transfers/cancel')
+            .post(PUTIO_URL + "/transfers/cancel")
             .set(HEADERS)
             .query({
-                oauth_token: Storage.getItem('access_token')
+                oauth_token: Storage.getItem("access_token")
             })
             .send({
                 transfer_ids: id
@@ -148,10 +148,10 @@ export const transferCancel = (id) => {
 export const filesList = (id = 0) => {
     return new Promise((resolve, reject) => {
         request
-            .get(PUTIO_URL + '/files/list')
+            .get(PUTIO_URL + "/files/list")
             .set(HEADERS)
             .query({
-                oauth_token: Storage.getItem('access_token'),
+                oauth_token: Storage.getItem("access_token"),
                 parent_id: id,
                 breadcrumbs: true,
                 total: true,
@@ -164,9 +164,6 @@ export const filesList = (id = 0) => {
                 mp4_stream_url: true,
                 mp4_stream_url_parent: true
             })
-            .send({
-                transfer_ids: id
-            })
             .end((err, res) => {
                 if (err) {
                     reject(res.body, err);
@@ -177,13 +174,36 @@ export const filesList = (id = 0) => {
     });
 };
 
+export const filesTree = (id = 0, path = [0]) => {
+    return new Promise((resolve, reject) => {
+        request
+            .get(PUTIO_URL + "/files/list")
+            .set(HEADERS)
+            .query({
+                oauth_token: Storage.getItem("access_token"),
+                parent_id: id
+            })
+            .end((err, res) => {
+                if (err) {
+                    reject(res.body, err);
+                } else {
+                    let data = res.body || {};
+
+                    data.path = path;
+
+                    resolve(data);
+                }
+            });
+    });
+};
+
 export const fileStream = (id) => {
     return new Promise((resolve, reject) => {
         request
-            .get(PUTIO_URL + '/files/' + id + '/stream')
+            .get(PUTIO_URL + "/files/" + id + "/stream")
             .set(HEADERS)
             .query({
-                oauth_token: Storage.getItem('access_token'),
+                oauth_token: Storage.getItem("access_token"),
             })
             .end((err, res) => {
                 if (err) {
@@ -198,10 +218,10 @@ export const fileStream = (id) => {
 export const createFolder = (parent_id = 0, name) => {
     return new Promise((resolve, reject) => {
         request
-            .post(PUTIO_URL + '/files/create-folder')
+            .post(PUTIO_URL + "/files/create-folder")
             .set(HEADERS)
             .query({
-                oauth_token: Storage.getItem('access_token')
+                oauth_token: Storage.getItem("access_token")
             })
             .send({
                 parent_id,
@@ -220,10 +240,10 @@ export const createFolder = (parent_id = 0, name) => {
 export const fileRename = (file_id, name) => {
     return new Promise((resolve, reject) => {
         request
-            .post(PUTIO_URL + '/files/rename')
+            .post(PUTIO_URL + "/files/rename")
             .set(HEADERS)
             .query({
-                oauth_token: Storage.getItem('access_token')
+                oauth_token: Storage.getItem("access_token")
             })
             .send({
                 file_id,
@@ -239,16 +259,38 @@ export const fileRename = (file_id, name) => {
     });
 };
 
+export const filesMove = (file_ids, parent_id) => {
+    return new Promise((resolve, reject) => {
+        request
+            .post(PUTIO_URL + "/files/move")
+            .set(HEADERS)
+            .query({
+                oauth_token: Storage.getItem("access_token")
+            })
+            .send({
+                parent_id,
+                file_ids: (_.isArray(file_ids)) ? _.join(file_ids, ",") : file_ids
+            })
+            .end((err, res) => {
+                if (err) {
+                    reject(res.body, err);
+                } else {
+                    resolve(res.body || {});
+                }
+            });
+    });
+};
+
 export const filesDelete = (ids) => {
     return new Promise((resolve, reject) => {
         request
-            .post(PUTIO_URL + '/files/delete')
+            .post(PUTIO_URL + "/files/delete")
             .set(HEADERS)
             .query({
-                oauth_token: Storage.getItem('access_token')
+                oauth_token: Storage.getItem("access_token")
             })
             .send({
-                file_ids: (_.isArray(ids)) ? _.join(ids, ',') : ids
+                file_ids: (_.isArray(ids)) ? _.join(ids, ",") : ids
             })
             .end((err, res) => {
                 if (err) {
@@ -266,13 +308,13 @@ export const filesDelete = (ids) => {
 export const zipCreate = (ids) => {
     return new Promise((resolve, reject) => {
         request
-            .post(PUTIO_URL + '/zips/create')
+            .post(PUTIO_URL + "/zips/create")
             .set(HEADERS)
             .query({
-                oauth_token: Storage.getItem('access_token')
+                oauth_token: Storage.getItem("access_token")
             })
             .send({
-                file_ids: (_.isArray(ids)) ? _.join(ids, ',') : ids
+                file_ids: (_.isArray(ids)) ? _.join(ids, ",") : ids
             })
             .end((err, res) => {
                 if (err) {
@@ -290,10 +332,10 @@ export const zipCreate = (ids) => {
 export const zip = (id) => {
     return new Promise((resolve, reject) => {
         request
-            .get(PUTIO_URL + '/zips/' + id)
+            .get(PUTIO_URL + "/zips/" + id)
             .set(HEADERS)
             .query({
-                oauth_token: Storage.getItem('access_token')
+                oauth_token: Storage.getItem("access_token")
             })
             .end((err, res) => {
                 if (err) {
@@ -312,10 +354,10 @@ export const zip = (id) => {
 export const fileMp4 = (id) => {
     return new Promise((resolve, reject) => {
         request
-            .post(PUTIO_URL + '/files/' + id + '/mp4')
+            .post(PUTIO_URL + "/files/" + id + "/mp4")
             .set(HEADERS)
             .query({
-                oauth_token: Storage.getItem('access_token')
+                oauth_token: Storage.getItem("access_token")
             })
             .end((err, res) => {
                 if (err) {
@@ -333,10 +375,10 @@ export const fileMp4 = (id) => {
 export const fileMp4Status = (id) => {
     return new Promise((resolve, reject) => {
         request
-            .get(PUTIO_URL + '/files/' + id + '/mp4')
+            .get(PUTIO_URL + "/files/" + id + "/mp4")
             .set(HEADERS)
             .query({
-                oauth_token: Storage.getItem('access_token')
+                oauth_token: Storage.getItem("access_token")
             })
             .end((err, res) => {
                 if (err) {

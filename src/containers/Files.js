@@ -18,7 +18,8 @@ const mapStateToProps = (state, props) => {
         parent: state.parent,
         zip: state.zip,
         stream: state.stream,
-        mp4: state.mp4
+        mp4: state.mp4,
+        tree: state.tree
     };
 };
 
